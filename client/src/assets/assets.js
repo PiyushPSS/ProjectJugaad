@@ -84,37 +84,46 @@ const assets = {
 
 export const menu_list = [
     {
-        menu_name: "Salad",
-        menu_image: menu_1
+        menu_name: "All",
+        menu_image: menu_1,
+        link_location: '/'
     },
     {
-        menu_name: "Rolls",
-        menu_image: menu_2
+        menu_name: "Clothes",
+        menu_image: menu_2,
+        link_location: '/category/clothes'
     },
     {
-        menu_name: "Deserts",
-        menu_image: menu_3
+        menu_name: "Books",
+        menu_image: menu_3,
+        link_location: '/category/books'
     },
     {
-        menu_name: "Sandwich",
-        menu_image: menu_4
+        menu_name: "Essentials",
+        menu_image: menu_4,
+        link_location: '/category/daily-use'
     },
     {
-        menu_name: "Cake",
-        menu_image: menu_5
+        menu_name: "Projects",
+        menu_image: menu_5,
+        link_location: '/category/projects'
     },
     {
-        menu_name: "Pure Veg",
-        menu_image: menu_6
+        menu_name: "Car",
+        menu_image: menu_6,
+        link_location: '/category/car'
     },
     {
-        menu_name: "Pasta",
-        menu_image: menu_7
+        menu_name: "Bike",
+        menu_image: menu_7,
+        link_location: '/category/bike'
     },
     {
-        menu_name: "Noodles",
-        menu_image: menu_8
-    }]
+        menu_name: "PG Rooms",
+        menu_image: menu_8,
+        link_location: '/category/pg-rooms'
+    }
+]
 
 export const food_list = [
     {
