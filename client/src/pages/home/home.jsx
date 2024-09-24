@@ -8,8 +8,7 @@ import { Routes, Route } from 'react-router-dom'
 
 const Home = () => {
 
-  const [showModel, setShowModel] = useState(false);
-
+  const [categoryText, setCategoryText] = useState('All');
   const [category, setCategory] = useState('All');
 
   return (
@@ -27,16 +26,20 @@ const Home = () => {
         setShowModel(false);
       }} />} */}
 
+      <div className="flex justify-between items-center my-4">
+        <h2 className="text-2xl font-bold text-gray-800">{categoryText.toUpperCase()} Recent Requests:</h2>
+        <p className='cursor-pointer'><u>view all</u></p>
+      </div>
 
       <Routes>
-        <Route path='/' element={<Categories name="all" />} />
-        <Route path='/category/clothes' element={<Categories name='clothes' />} />
-        <Route path='/category/bike' element={<Categories name='bike' />} />
-        <Route path='/category/car' element={<Categories name='car' />} />
-        <Route path='/category/projects' element={<Categories name='projects' />} />
-        <Route path='/category/daily-use' element={<Categories name='essentials' />} />
-        <Route path='/category/pg-rooms' element={<Categories name='pg-rooms' />} />
-        <Route path='/category/books' element={<Categories name='books' />} />
+        <Route path='/' element={<Categories name="all" setCategoryText={setCategoryText} />} />
+        <Route path='/category/clothes' element={<Categories name='clothes' setCategoryText={setCategoryText} />} />
+        <Route path='/category/bike' element={<Categories name='bike' setCategoryText={setCategoryText} />} />
+        <Route path='/category/car' element={<Categories name='car' setCategoryText={setCategoryText} />} />
+        <Route path='/category/projects' element={<Categories name='projects' setCategoryText={setCategoryText} />} />
+        <Route path='/category/daily-use' element={<Categories name='daily-use' setCategoryText={setCategoryText} />} />
+        <Route path='/category/pg-rooms' element={<Categories name='pg-rooms' setCategoryText={setCategoryText} />} />
+        <Route path='/category/books' element={<Categories name='books' setCategoryText={setCategoryText} />} />
       </Routes>
     </div>
   )
