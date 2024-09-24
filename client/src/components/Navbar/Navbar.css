@@ -21,7 +21,7 @@
 .navbar-right {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 15px;
 }
 
 .navbar button {
@@ -47,8 +47,4 @@
 
 .navbar li {
     cursor: pointer;
-}
-
-.navbar-chat-icon {
-    position: relative;
 }
