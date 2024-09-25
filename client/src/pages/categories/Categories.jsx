@@ -1,31 +1,43 @@
-import React from 'react'
-import { dummy } from '../../assets/dummy';
+import React, { useEffect } from 'react'
+import axios from 'axios';
 
 const Categories = (props) => {
 
     const categoryName = props.name;
-    props.setCategoryText(categoryName);
+
+    const [JugaadRequests, setJugaadRequests] = React.useState([]);
+
+    useEffect(() => {
+        props.setCategoryText(categoryName);
+
+        axios.get('http://localhost:3000/')
+            .then((response) => {
+                setJugaadRequests(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    });
 
     return (
         <>
-            {dummy.map((item, index) => {
+            {JugaadRequests.map((item, index) => {
                 if (item.Category.toLowerCase() === categoryName.toLowerCase() || categoryName == 'all') {
 
-
                     return (
-                        <div class="mx-auto bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 mb-10 cursor-pointer">
-                            <div class="p-6">
-                                <h3 class="text-lg font-semibold text-gray-800">{item.Title}</h3>
-                                <p class="text-gray-600 mt-2">
+                        <div className="mx-auto bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 mb-10 cursor-pointer" key={index}>
+                            <div className="p-6">
+                                <h3 className="text-lg font-semibold text-gray-800">{item.Title}</h3>
+                                <p className="text-gray-600 mt-2">
                                     {item.Description}
                                 </p>
-                                <div class="flex items-center justify-between mt-4">
-                                    <span class="text-gray-700 font-semibold">Willing to Pay: ₹{item.Price}</span>
-                                    <span class="text-sm text-gray-500">User: {item.UserName}</span>
+                                <div className="flex items-center justify-between mt-4">
+                                    <span className="text-gray-700 font-semibold">Willing to Pay: ₹{item.Price}</span>
+                                    <span className="text-sm text-gray-500">User: {item.UserName}</span>
                                 </div>
-                                <div class="flex items-center justify-between mt-2">
-                                    <span class="text-sm text-gray-500">Category: {item.Category}</span>
-                                    <span class="text-sm text-gray-400">Requested At: {item.CreatedAt}</span>
+                                <div className="flex items-center justify-between mt-2">
+                                    <span className="text-sm text-gray-500">Category: {item.Category}</span>
+                                    <span className="text-sm text-gray-400">Requested At: {item.CreatedAt}</span>
                                 </div>
                             </div>
                         </div>
@@ -33,9 +45,9 @@ const Categories = (props) => {
                 }
             })}
 
-            <div class="mx-auto bg-transparent border border-black rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 mb-10 cursor-pointer w-60">
-                <div class="p-3">
-                    <h3 class="text-lg font-semibold text-gray-800 text-center">view all requests</h3>
+            <div className="mx-auto bg-transparent border border-black rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 mb-10 cursor-pointer w-60">
+                <div className="p-3">
+                    <h3 className="text-lg font-semibold text-gray-800 text-center">view all requests</h3>
                 </div>
             </div>
 
