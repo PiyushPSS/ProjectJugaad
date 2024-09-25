@@ -1,14 +1,18 @@
-import mongoose from 'mongoose';
+import mongoose, { mongo } from 'mongoose';
 import requestSchema from './models/requestSchema.js';
 import express from 'express';
 import cors from 'cors';
+import bodyParser from 'body-parser';
+import { mongoURL } from './cred.js';
+
 const JugaadRequest = mongoose.model('requests', requestSchema);
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb+srv://admin_jugaad:admin%40jugaad@cluster0.p8gze.mongodb.net/jugaadDB').then(() => {
+mongoose.connect(mongoURL).then(() => {
     console.log("Connected to the database");
 }).catch((err) => {
     console.log(err);
@@ -21,6 +25,8 @@ app.get('/', (req, res) => {
         console.log(err);
     });
 });
+
+
 
 app.listen(3000, () => {
     console.log('Server running on port 3000');

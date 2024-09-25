@@ -1,19 +1,13 @@
 import mongoose from 'mongoose';
 
-const requestSchema = mongoose.Schema({
-    Name: {
-        type: String,
-        required: true
-    },
-    Description: {
-        type: String,
-        required: true
-    },
-    UserID: String,
-    CreatedAt: String,
-    Price: Number,
-    UserName: String,
-    Category: String
-})
+const requestSchema = new mongoose.Schema({
+    Title: { type: String, required: true },
+    Description: { type: String, required: true },
+    UserID: { type: String, required: true },
+    CreatedAt: { type: Date, default: Date.now },
+    Price: { type: Number, required: true },
+    UserName: { type: String, required: true },
+    Category: { type: String, required: true }
+});
 
 export default requestSchema;

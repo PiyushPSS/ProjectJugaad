@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './home.css';
 import Header from '../../components/Header/Header';
 import ExploreMenu from '../../components/ExploreMenu/ExploreMenu';
+import AddRequestModel from '../../components/AddRequestModel'
 import Categories from '../categories/Categories';
 import { Routes, Route } from 'react-router-dom';
 import NotFound from '../../components/NotFound/NotFound';
@@ -9,6 +10,7 @@ import NotFound from '../../components/NotFound/NotFound';
 const Home = ({ path }) => {
   const [categoryText, setCategoryText] = useState('All');
   const [category, setCategory] = useState('All');
+  const [showModel, setShowModel] = useState(false);
 
   if (path === '/') {
 
@@ -21,6 +23,17 @@ const Home = ({ path }) => {
           <h2 className="text-2xl font-bold text-gray-800">{categoryText.toUpperCase()} Recent Requests:</h2>
           <p className='cursor-pointer'><u>view all</u></p>
         </div>
+
+
+        {/* TODO: ADD THE BUTTON AND IMAGE TO THE HEADER IMAGE AS SOON AS THE USER LOGS IN. */}
+
+        <button className='addRequestButton bg-violet-500 px-4 py-2 rounded-lg text-lg text-white' onClick={() => {
+          setShowModel(true);
+        }}>Add a Request</button>
+
+        {showModel && <AddRequestModel onClose={() => {
+          setShowModel(false);
+        }} />}
 
 
         <Routes>
