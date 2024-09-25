@@ -19,10 +19,17 @@ const Categories = (props) => {
             })
     });
 
+    let count = 0;
+
     return (
         <>
             {JugaadRequests.map((item, index) => {
                 if (item.Category.toLowerCase() === categoryName.toLowerCase() || categoryName == 'all') {
+
+                    // Show only 5 requests max for each categories.
+                    if (++count > 5) {
+                        return;
+                    }
 
                     return (
                         <div className="mx-auto bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 mb-10 cursor-pointer" key={index}>

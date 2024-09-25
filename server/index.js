@@ -15,7 +15,7 @@ mongoose.connect('mongodb+srv://admin_jugaad:admin%40jugaad@cluster0.p8gze.mongo
 });
 
 app.get('/', (req, res) => {
-    JugaadRequest.find({}).then((data) => {
+    JugaadRequest.find({}).sort({ "CreatedAt": -1 }).then((data) => {
         res.send(data);
     }).catch((err) => {
         console.log(err);
