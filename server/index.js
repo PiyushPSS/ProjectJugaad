@@ -9,8 +9,7 @@ const JugaadRequest = mongoose.model('requests', requestSchema);
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
 mongoose.connect(mongoURL).then(() => {
     console.log("Connected to the database");
@@ -26,6 +25,14 @@ app.get('/', (req, res) => {
     });
 });
 
+app.post('/addRequest', (req, res) => {
+    const newRequest = new JugaadRequest(req.query);
+    newRequest.save().then(() => {
+        res.send("Request added successfully");
+    }).catch((err) => {
+        console.log(err);
+    })
+})
 
 
 app.listen(3000, () => {

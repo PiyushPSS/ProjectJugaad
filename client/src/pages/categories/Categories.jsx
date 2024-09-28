@@ -32,7 +32,7 @@ const Categories = (props) => {
                     }
 
                     return (
-                        <div className="mx-auto bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 mb-10 cursor-pointer" key={index}>
+                        <div className="mx-auto bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 mb-10 cursor-pointer" key={item._id}>
                             <div className="p-6">
                                 <h3 className="text-lg font-semibold text-gray-800">{item.Title}</h3>
                                 <p className="text-gray-600 mt-2">

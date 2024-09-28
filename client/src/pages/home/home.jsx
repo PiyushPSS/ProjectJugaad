@@ -6,13 +6,14 @@ import AddRequestModel from '../../components/AddRequestModel'
 import Categories from '../categories/Categories';
 import { Routes, Route } from 'react-router-dom';
 import NotFound from '../../components/NotFound/NotFound';
+import { CategoryURLList } from '../../assets/assets';
 
 const Home = ({ path }) => {
   const [categoryText, setCategoryText] = useState('All');
   const [category, setCategory] = useState('All');
   const [showModel, setShowModel] = useState(false);
 
-  if (path === '/') {
+  if (CategoryURLList.includes(path)) {
 
     return (
       <div>

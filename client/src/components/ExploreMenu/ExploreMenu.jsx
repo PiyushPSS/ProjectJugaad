@@ -1,7 +1,7 @@
 import React from 'react'
 import './ExploreMenu.css'
 import { menu_list } from '../../assets/assets'
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 const ExploreMenu = (props) => {
 
