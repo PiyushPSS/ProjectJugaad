@@ -12,7 +12,7 @@ const Home = ({ path }) => {
   const [categoryText, setCategoryText] = useState(categoryName.all);
   const [showModel, setShowModel] = useState(false);
 
-  if (CategoryURLList.includes(path)) {
+  if (CategoryURLList.includes(path) || path.startsWith('/short') || path.startsWith('/jugaad-req')) {
 
     return (
       <div>
@@ -34,7 +34,6 @@ const Home = ({ path }) => {
         {showModel && <AddRequestModel onClose={() => {
           setShowModel(false);
         }} />}
-
 
         <Routes>
           <Route path="/" element={<Categories name={categoryName.all} setCategoryText={setCategoryText} />} />

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import requestSchema from './models/requestSchema.js';
 import express from 'express';
 import cors from 'cors';
-import { mongoURL } from './cred.js';
+import { addRequest, allData, mongoURL, search, shortURL } from './cred.js';
 
 const JugaadRequest = mongoose.model('requests', requestSchema);
 
@@ -16,7 +16,7 @@ mongoose.connect(mongoURL).then(() => {
     console.log(err);
 });
 
-app.get('/allData', (req, res) => {
+app.get(allData, (req, res) => {
     JugaadRequest.find({}).sort({ "CreatedAt": -1 }).then((data) => {
         res.send(data);
     }).catch((err) => {
@@ -24,7 +24,7 @@ app.get('/allData', (req, res) => {
     });
 });
 
-app.get('/search', (req, res) => {
+app.get(search, (req, res) => {
     JugaadRequest.find({ _id: req.query._id }).then((data) => {
         res.send(data);
     }).catch((err) => {
@@ -32,7 +32,7 @@ app.get('/search', (req, res) => {
     });
 })
 
-app.get('/short', (req, res) => {
+app.get(shortURL, (req, res) => {
     JugaadRequest.find({ ShortID: req.query.ShortID }).then((data) => {
         res.send(data);
     }).catch((err) => {
@@ -40,7 +40,7 @@ app.get('/short', (req, res) => {
     });
 })
 
-app.post('/addRequest', (req, res) => {
+app.post(addRequest, (req, res) => {
     const newRequest = new JugaadRequest(req.query);
     newRequest.save().then(() => {
         res.send("Request added successfully");

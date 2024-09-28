@@ -122,7 +122,9 @@ export const CategoryURLList = [
     '/category/projects',
     '/category/car',
     '/category/bike',
-    '/category/pg-rooms'
+    '/category/pg-rooms',
+    '/short',
+    '/jugaad-req'
 ];
 
 export default assets;
