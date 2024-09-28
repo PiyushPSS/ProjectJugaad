@@ -1,6 +1,6 @@
 import React from 'react'
 import './ExploreMenu.css'
-import { menu_list } from '../../assets/assets'
+import { category_list } from '../../assets/assets'
 import { Link } from 'react-router-dom';
 
 const ExploreMenu = (props) => {
@@ -12,7 +12,7 @@ const ExploreMenu = (props) => {
             <h1>Browse Jugaad Requests</h1>
             <p className='explore-menu-text'>Discover various categories to assist with.</p>
             <div className="explore-menu-list">
-                {menu_list.map((item, index) => (
+                {category_list.map((item, index) => (
                     <Link to={item.link_location} key={index}>
                         <div className="explore-menu-list-item" onClick={() => {
                             setCategoryText(prev => prev === item.menu_name ? 'All' : item.menu_name);

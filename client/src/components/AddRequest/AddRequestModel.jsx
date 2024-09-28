@@ -1,5 +1,6 @@
 import React from 'react'
 import { CircleX } from 'lucide-react';
+import { nanoid } from 'nanoid';
 
 const AddRequestModel = (props) => {
 
@@ -14,13 +15,16 @@ const AddRequestModel = (props) => {
         const createURL = new URL('http://localhost:3000/addRequest?');
         const params = new URLSearchParams(createURL.search);
 
+        const shortID = nanoid(5);
+
         params.append('Title', Title);
         params.append('Description', Description);
         params.append('UserID', "1");
         params.append("CreatedAt", new Date().toISOString());
         params.append('Price', Price);
-        params.append("UserName", "Sai");
+        params.append("UserFirstName", "Sai");
         params.append('Category', Category);
+        params.append('ShortID', shortID);
 
         let request = await fetch(createURL + params.toString(), {
             method: 'POST',
@@ -55,7 +59,7 @@ const AddRequestModel = (props) => {
                             <option value="Projects">Projects</option>
                             <option value="Car">Car</option>
                             <option value="Bike">Bike</option>
-                            <option value="PG-Rooms">PG Rooms</option>
+                            <option value="PG Rooms">PG Rooms</option>
                         </select>
                     </form>
 

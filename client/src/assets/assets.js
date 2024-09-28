@@ -71,7 +71,7 @@ export const categoryID = [
     'pg-rooms'
 ];
 
-export const menu_list = [
+export const category_list = [
     {
         menu_name: "All",
         menu_image: menu_1,

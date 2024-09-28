@@ -1,8 +1,7 @@
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 import requestSchema from './models/requestSchema.js';
 import express from 'express';
 import cors from 'cors';
-import bodyParser from 'body-parser';
 import { mongoURL } from './cred.js';
 
 const JugaadRequest = mongoose.model('requests', requestSchema);
@@ -24,6 +23,22 @@ app.get('/allData', (req, res) => {
         console.log(err);
     });
 });
+
+app.get('/search', (req, res) => {
+    JugaadRequest.find({ _id: req.query._id }).then((data) => {
+        res.send(data);
+    }).catch((err) => {
+        console.log("Error fetching the data: " + err);
+    });
+})
+
+app.get('/short', (req, res) => {
+    JugaadRequest.find({ ShortID: req.query.ShortID }).then((data) => {
+        res.send(data);
+    }).catch((err) => {
+        console.log("Error fetching the data: " + err);
+    });
+})
 
 app.post('/addRequest', (req, res) => {
     const newRequest = new JugaadRequest(req.query);

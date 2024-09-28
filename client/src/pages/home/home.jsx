@@ -3,7 +3,7 @@ import './home.css';
 import Header from '../../components/Header/Header';
 import ExploreMenu from '../../components/ExploreMenu/ExploreMenu';
 import AddRequestModel from '../../components/AddRequest/AddRequestModel'
-import Categories from '../categories/Categories';
+import Categories from '../categories/CategoryItems';
 import { Routes, Route } from 'react-router-dom';
 import NotFound from '../../components/NotFound/NotFound';
 import { CategoryURLList, categoryName } from '../../assets/assets';

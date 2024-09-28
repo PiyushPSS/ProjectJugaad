@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Categories = (props) => {
 
@@ -36,22 +37,24 @@ const Categories = (props) => {
                     }
 
                     return (
-                        <div className="mx-auto bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 mb-10 cursor-pointer" key={item._id}>
-                            <div className="p-6">
-                                <h3 className="text-lg font-semibold text-gray-800">{item.Title}</h3>
-                                <p className="text-gray-600 mt-2">
-                                    {item.Description}
-                                </p>
-                                <div className="flex items-center justify-between mt-4">
-                                    <span className="text-gray-700 font-semibold">Willing to Pay: ₹{item.Price}</span>
-                                    <span className="text-sm text-gray-500">User: {item.UserName}</span>
-                                </div>
-                                <div className="flex items-center justify-between mt-2">
-                                    <span className="text-sm text-gray-500">Category: {item.Category}</span>
-                                    <span className="text-sm text-gray-400">Requested At: {item.CreatedAt}</span>
+                        <Link to={'/jugaad-req/' + item._id} key={index}>
+                            <div className="mx-auto bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 mb-10 cursor-pointer" key={item._id}>
+                                <div className="p-6">
+                                    <h3 className="text-lg font-semibold text-gray-800">{item.Title}</h3>
+                                    <p className="text-gray-600 mt-2">
+                                        {item.Description}
+                                    </p>
+                                    <div className="flex items-center justify-between mt-4">
+                                        <span className="text-gray-700 font-semibold">Willing to Pay: ₹{item.Price}</span>
+                                        <span className="text-sm text-gray-500">User: {item.UserFirstName}</span>
+                                    </div>
+                                    <div className="flex items-center justify-between mt-2">
+                                        <span className="text-sm text-gray-500">Category: {item.Category}</span>
+                                        <span className="text-sm text-gray-400">Requested At: {item.CreatedAt}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     )
                 }
             })}

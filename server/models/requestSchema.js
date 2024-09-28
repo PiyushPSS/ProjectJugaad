@@ -6,8 +6,10 @@ const requestSchema = new mongoose.Schema({
     UserID: { type: String, required: true },
     CreatedAt: { type: Date, default: Date.now },
     Price: { type: Number, required: true },
-    UserName: { type: String, required: true },
-    Category: { type: String, required: true }
+    UserFirstName: { type: String, required: true },
+    UserLastName: { type: String, required: true },
+    Category: { type: String, required: true },
+    ShortID: { type: String, required: true }
 });
 
 export default requestSchema;
