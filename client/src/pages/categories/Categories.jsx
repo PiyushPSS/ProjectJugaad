@@ -10,7 +10,7 @@ const Categories = (props) => {
     useEffect(() => {
         props.setCategoryText(categoryName);
 
-        axios.get('http://localhost:3000/')
+        axios.get('http://localhost:3000/allData')
             .then((response) => {
                 setJugaadRequests(response.data);
             })
@@ -24,7 +24,11 @@ const Categories = (props) => {
     return (
         <>
             {JugaadRequests.map((item, index) => {
-                if (item.Category.toLowerCase() === categoryName.toLowerCase() || categoryName == 'all') {
+
+                // CategoryName is used for the showcasing of the name at the home page, and categoryID is used for the API call. 
+
+                //If the category name is 'all' or it matches the data that comes from the database then show the data.
+                if (item.Category.toLowerCase() === categoryName.toLowerCase() || categoryName === 'All') {
 
                     // Show only 5 requests max for each categories.
                     if (++count > 5) {

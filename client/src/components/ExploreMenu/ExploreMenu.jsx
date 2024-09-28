@@ -1,11 +1,11 @@
 import React from 'react'
 import './ExploreMenu.css'
 import { menu_list } from '../../assets/assets'
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ExploreMenu = (props) => {
 
-    const { category, setCategory } = props;
+    const { categoryText, setCategoryText } = props;
 
     return (
         <div className='explore-menu' id='explore-menu'>
@@ -15,9 +15,9 @@ const ExploreMenu = (props) => {
                 {menu_list.map((item, index) => (
                     <Link to={item.link_location} key={index}>
                         <div className="explore-menu-list-item" onClick={() => {
-                            setCategory(prev => prev === item.menu_name ? 'All' : item.menu_name);
+                            setCategoryText(prev => prev === item.menu_name ? 'All' : item.menu_name);
                         }}>
-                            <img className={category === item.menu_name ? "active" : ""} src={item.menu_image} alt={item.title} />
+                            <img className={categoryText === item.menu_name ? "active" : ""} src={item.menu_image} alt={item.title} />
                             <p>{item.menu_name}</p>
                         </div>
                     </Link>

@@ -49,6 +49,28 @@ const assets = {
     parcel_icon
 }
 
+export const categoryName = {
+    'all': 'All',
+    'clothes': 'Clothes',
+    'books': 'Books',
+    'daily-use': 'Daily Use',
+    'projects': 'Projects',
+    'car': 'Car',
+    'bike': 'Bike',
+    'pg-rooms': 'PG Rooms'
+};
+
+export const categoryID = [
+    'all',
+    'clothes',
+    'books',
+    'daily-use',
+    'projects',
+    'car',
+    'bike',
+    'pg-rooms'
+];
+
 export const menu_list = [
     {
         menu_name: "All",

@@ -17,7 +17,7 @@ mongoose.connect(mongoURL).then(() => {
     console.log(err);
 });
 
-app.get('/', (req, res) => {
+app.get('/allData', (req, res) => {
     JugaadRequest.find({}).sort({ "CreatedAt": -1 }).then((data) => {
         res.send(data);
     }).catch((err) => {
