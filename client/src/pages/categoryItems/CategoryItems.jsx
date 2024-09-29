@@ -52,7 +52,11 @@ const Categories = (props) => {
                     let completeTime;
                     if (hours > 12) {
                         completeTime = day + " " + month + ", " + year + " at " + (hours - 12) + ":" + minutes + " PM";
-                    } else {
+                    } 
+                    else if(hours === 12) {
+                        completeTime = day + " " + month + ", " + year + " at " + hours + ":" + minutes + " PM";
+                    }
+                    else {
 
                         if (hours === 0) {
                             hours = 12;
