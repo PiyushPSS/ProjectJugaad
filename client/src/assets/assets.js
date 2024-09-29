@@ -60,16 +60,30 @@ export const categoryName = {
     'pg-rooms': 'PG Rooms'
 };
 
-export const categoryID = [
-    'all',
-    'clothes',
-    'books',
-    'daily-use',
-    'projects',
-    'car',
-    'bike',
-    'pg-rooms'
-];
+// export const categoryID = [
+//     'all',
+//     'clothes',
+//     'books',
+//     'daily-use',
+//     'projects',
+//     'car',
+//     'bike',
+//     'pg-rooms'
+// ];
+
+export const calendarMonth = (month) => {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+        'October', 'November', 'December'];
+    return months[month];
+}
+
+export const hour = (hour) => {
+    if (hour > 12) {
+        return hour - 12;
+    } else {
+        return hour;
+    }
+}
 
 export const category_list = [
     {
@@ -124,7 +138,8 @@ export const CategoryURLList = [
     '/category/bike',
     '/category/pg-rooms',
     '/short',
-    '/jugaad-req'
+    '/jugaad-req',
+    "/addRequest"
 ];
 
 export default assets;

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { calendarMonth } from '../../assets/assets';
 
 const Categories = (props) => {
 
@@ -36,6 +37,29 @@ const Categories = (props) => {
                         return;
                     }
 
+                    const dateObj = new Date(item.CreatedAt);
+
+                    const year = dateObj.getFullYear();
+                    const month = calendarMonth(dateObj.getMonth() + 1); // Months are 0-indexed, so add 1
+                    const day = dateObj.getDate();
+                    let hours = dateObj.getHours();
+                    let minutes = dateObj.getMinutes();
+
+                    if (minutes < 10) {
+                        minutes = "0" + minutes;
+                    }
+
+                    let completeTime;
+                    if (hours > 12) {
+                        completeTime = day + " " + month + ", " + year + " at " + (hours - 12) + ":" + minutes + " PM";
+                    } else {
+
+                        if (hours === 0) {
+                            hours = 12;
+                        }
+                        completeTime = day + " " + month + ", " + year + " at " + hours + ":" + minutes + " AM";
+                    }
+
                     return (
                         <Link to={'/jugaad-req/' + item._id} key={index}>
                             <div className="mx-auto bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 mb-10 cursor-pointer" key={item._id}>
@@ -46,11 +70,11 @@ const Categories = (props) => {
                                     </p>
                                     <div className="flex items-center justify-between mt-4">
                                         <span className="text-gray-700 font-semibold">Willing to Pay: ₹{item.Price}</span>
-                                        <span className="text-sm text-gray-500">User: {item.UserFirstName}</span>
+                                        <span className="text-sm text-gray-500">Posted By: {item.UserFirstName}</span>
                                     </div>
                                     <div className="flex items-center justify-between mt-2">
                                         <span className="text-sm text-gray-500">Category: {item.Category}</span>
-                                        <span className="text-sm text-gray-400">Requested At: {item.CreatedAt}</span>
+                                        <span className="text-sm text-gray-400">Requested At: {completeTime}</span>
                                     </div>
                                 </div>
                             </div>

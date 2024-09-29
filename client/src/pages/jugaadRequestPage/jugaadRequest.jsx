@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { Share2, MessageCircle, MoreVertical, UserRound } from "lucide-react"
 import { toast, Bounce } from 'react-toastify';
+import { calendarMonth } from '../../assets/assets';
 
 const Jugaadrequest = () => {
 
@@ -61,6 +62,30 @@ const Jugaadrequest = () => {
 
     const { _id, Title, Description, CreatedAt, Price, UserFirstName, UserLastName, Category, ShortID } = requestData[0];
 
+    //Destructure the date format.
+    const dateObj = new Date(CreatedAt);
+
+    const year = dateObj.getFullYear();
+    const month = calendarMonth(dateObj.getMonth() + 1); // Months are 0-indexed, so add 1
+    const day = dateObj.getDate();
+    let hours = dateObj.getHours();
+    let minutes = dateObj.getMinutes();
+
+    if(minutes < 10) {
+      minutes = "0" + minutes;
+    }
+
+    let completeTime;
+    if (hours > 12) {
+      completeTime = day + " " + month + ", " + year + " at " + (hours - 12) + ":" + minutes + " PM";
+    } else {
+
+      if (hours === 0) {
+        hours = 12;
+      }
+      completeTime = day + " " + month + ", " + year + " at " + hours + ":" + minutes + " AM";
+    }
+
     return (
       <div className="container mx-auto p-4 mt-5">
 
@@ -75,7 +100,7 @@ const Jugaadrequest = () => {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold">{UserFirstName + " " + UserLastName}</h2>
-                  <p className="text-sm text-gray-500">{CreatedAt}</p>
+                  <p className="text-sm text-gray-500">{completeTime}</p>
                 </div>
               </div>
               <div className="relative">

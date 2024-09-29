@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import './home.css';
 import Header from '../../components/Header/Header';
 import ExploreMenu from '../../components/ExploreMenu/ExploreMenu';
-import AddRequestModel from '../../components/AddRequest/AddRequestModel'
-import Categories from '../categories/CategoryItems';
-import { Routes, Route } from 'react-router-dom';
+import Categories from '../categoryItems/CategoryItems';
+import { Routes, Route, Link } from 'react-router-dom';
 import NotFound from '../../components/NotFound/NotFound';
 import { CategoryURLList, categoryName } from '../../assets/assets';
 
 const Home = ({ path }) => {
   const [categoryText, setCategoryText] = useState(categoryName.all);
-  const [showModel, setShowModel] = useState(false);
 
   if (CategoryURLList.includes(path) || path.startsWith('/short') || path.startsWith('/jugaad-req')) {
 
@@ -27,13 +25,7 @@ const Home = ({ path }) => {
 
         {/* TODO: ADD THE BUTTON AND IMAGE TO THE HEADER IMAGE AS SOON AS THE USER LOGS IN. */}
 
-        <button className='addRequestButton bg-violet-500 px-4 py-2 rounded-lg text-lg text-white' onClick={() => {
-          setShowModel(true);
-        }}>Add a Request</button>
-
-        {showModel && <AddRequestModel onClose={() => {
-          setShowModel(false);
-        }} />}
+        <Link to={'/addRequest'}><button className='bg-violet-500 px-4 py-2 rounded-lg text-lg text-white'>Add a Request</button></Link>
 
         <Routes>
           <Route path="/" element={<Categories name={categoryName.all} setCategoryText={setCategoryText} />} />

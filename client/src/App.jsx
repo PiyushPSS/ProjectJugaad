@@ -8,6 +8,7 @@ import Signup from './pages/signup/signup';
 import Profile from './pages/profile/profile';
 import Chat from './pages/chat/chat';
 import About from './pages/aboutUs/about';
+import AddRequestModel from './components/AddRequest/AddRequestModel';
 
 const App = () => {
 
@@ -25,6 +26,7 @@ const App = () => {
         <Route path='/about' element={<About />} />
         <Route path='/jugaad-req/:id' element={<Jugaadrequest />} />
         <Route path='/short/:id' element={<Jugaadrequest />} />
+        <Route path='/addRequest' element={<AddRequestModel />} />
       </Routes>
     </div>
   )
