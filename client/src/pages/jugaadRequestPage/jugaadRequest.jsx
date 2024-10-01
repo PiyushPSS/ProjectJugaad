@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { Share2, MessageCircle, MoreVertical, UserRound } from "lucide-react"
+import { Share2, MessageCircle, MoreVertical, UserRound, AlertTriangle, ChevronDown, ChevronUp } from "lucide-react"
 import { toast, Bounce } from 'react-toastify';
 import { calendarMonth } from '../../assets/assets';
 
@@ -13,6 +13,10 @@ const Jugaadrequest = () => {
   const [requestData, setRequestData] = useState([]);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const [isTermsOpen, setIsTermsOpen] = useState(false)
+
+  const toggleTerms = () => setIsTermsOpen(!isTermsOpen)
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -155,6 +159,70 @@ const Jugaadrequest = () => {
             </div>
           </div>
         </div>
+
+        {/* User Terms and Conditions Aggrement */}
+
+        <div className="my-8">
+          <div
+            className="bg-yellow-50 border-l-4 border-yellow-400 rounded-lg overflow-hidden"
+            role="region"
+            aria-labelledby="terms-title"
+          >
+            <button
+              onClick={toggleTerms}
+              className="w-full p-4 flex items-center justify-between text-left focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              aria-expanded={isTermsOpen}
+              id="terms-title"
+            >
+              <div className="flex items-center">
+                <AlertTriangle className="h-5 w-5 text-yellow-400 mr-2" />
+                <h2 className="text-lg font-semibold text-yellow-800">Important: Keep this in mind while sharing an item.</h2>
+              </div>
+              {isTermsOpen ? (
+                <ChevronUp className="h-5 w-5 text-yellow-600" />
+              ) : (
+                <ChevronDown className="h-5 w-5 text-yellow-600" />
+              )}
+            </button>
+            <div
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${isTermsOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
+                }`}
+            >
+              <div className="p-4 space-y-4 text-yellow-800">
+                <section>
+                  <h3 className="font-semibold">Peer-to-Peer Transaction Platform</h3>
+                  <p>Project Jugaad only facilitates connections between users and does not directly participate in transactions or agreements between individuals.</p>
+                </section>
+                <section>
+                  <h3 className="font-semibold">Use of Products at Your Own Risk</h3>
+                  <p>Users assume all risks associated with the use or rental of items listed. The platform is not liable for any damages or issues arising from product usage.</p>
+                </section>
+                <section>
+                  <h3 className="font-semibold">No Guarantees on Availability</h3>
+                  <p>We do not guarantee the availability of products at any given time. All listings are subject to the users' discretion and can be removed without notice.</p>
+                </section>
+                <section>
+                  <h3 className="font-semibold">Disputes Between Users</h3>
+                  <p>Any disputes or disagreements that arise from transactions must be resolved between the involved users. Project Jugaad team is not responsible for mediating or resolving disputes.</p>
+                </section>
+                <section>
+                  <h3 className="font-semibold">Adherence to Legal Guidelines</h3>
+                  <p>All transactions must comply with local laws. Any illegal activities, such as the sale of prohibited items, will result in immediate account suspension.</p>
+                </section>
+                <section>
+                  <h3 className="font-semibold">Non-Commercial Use</h3>
+                  <p>Project Jugaad is intended for non-commercial use, focused on sharing and renting everyday essentials. Any commercial use of the platform will lead to account termination.</p>
+                </section>
+                <section>
+                  <h3 className="font-semibold">Limited Liability</h3>
+                  <p>Project Jugaad shall not be held responsible for any monetary loss, fraud, or damages related to transactions made on the platform.</p>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
       </div>
     )
   }

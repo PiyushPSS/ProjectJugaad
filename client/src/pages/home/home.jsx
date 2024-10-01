@@ -22,8 +22,7 @@ const Home = ({ path }) => {
           <p className='cursor-pointer'><u>view all</u></p>
         </div>
 
-
-        {/* TODO: ADD THE BUTTON AND IMAGE TO THE HEADER IMAGE AS SOON AS THE USER LOGS IN. */}
+        {/* Add a request button. Using this button, the page will be redirected to the "Add Request" Page */}
 
         <Link to={'/addRequest'}><button className='bg-violet-500 px-4 py-2 rounded-lg text-lg text-white'>Add a Request</button></Link>
 

@@ -9,26 +9,30 @@ import Profile from './pages/profile/profile';
 import Chat from './pages/chat/chat';
 import About from './pages/aboutUs/about';
 import AddRequestModel from './components/AddRequest/AddRequestModel';
+import Footer from './components/Footer/Footer';
 
 const App = () => {
 
   const pathname = window.location.pathname;
 
   return (
-    <div className='app'>
-      <Navbar />
-      <Routes>
-        <Route path='*' element={<Home path={pathname} />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/chat' element={<Chat />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/jugaad-req/:id' element={<Jugaadrequest />} />
-        <Route path='/short/:id' element={<Jugaadrequest />} />
-        <Route path='/addRequest' element={<AddRequestModel />} />
-      </Routes>
-    </div>
+    <>
+      <div className='app'>
+        <Navbar />
+        <Routes>
+          <Route path='*' element={<Home path={pathname} />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/chat' element={<Chat />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/jugaad-req/:id' element={<Jugaadrequest />} />
+          <Route path='/short/:id' element={<Jugaadrequest />} />
+          <Route path='/addRequest' element={<AddRequestModel />} />
+        </Routes>
+      </div>
+      <Footer />
+    </>
   )
 }
 
