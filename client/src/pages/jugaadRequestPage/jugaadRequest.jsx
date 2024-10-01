@@ -22,15 +22,6 @@ const Jugaadrequest = () => {
     setIsMenuOpen(!isMenuOpen)
   }
 
-  const Button = ({ children, className = '', ...props }) => (
-    <button
-      className={`inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ${className}`}
-      {...props}
-    >
-      {children}
-    </button>
-  )
-
   useEffect(() => {
     //As soon as the page loads, retreive the data from the database.
     fetchData();
@@ -169,6 +160,8 @@ const Jugaadrequest = () => {
           </div>
         </div>
 
+        {/* User Terms and Conditions Aggrement */}
+
         <div className="my-8">
           <div
             className="bg-yellow-50 border-l-4 border-yellow-400 rounded-lg overflow-hidden"
@@ -183,7 +176,7 @@ const Jugaadrequest = () => {
             >
               <div className="flex items-center">
                 <AlertTriangle className="h-5 w-5 text-yellow-400 mr-2" />
-                <h2 className="text-lg font-semibold text-yellow-800">Important: Project Jugaad Terms and Conditions</h2>
+                <h2 className="text-lg font-semibold text-yellow-800">Important: Keep this in mind while sharing an item.</h2>
               </div>
               {isTermsOpen ? (
                 <ChevronUp className="h-5 w-5 text-yellow-600" />
@@ -196,10 +189,6 @@ const Jugaadrequest = () => {
                 }`}
             >
               <div className="p-4 space-y-4 text-yellow-800">
-                <section>
-                  <h3 className="font-semibold">No Responsibility for Product Condition</h3>
-                  <p>We do not take responsibility for the condition or quality of the products listed on the platform. Users are advised to inspect items thoroughly before renting.</p>
-                </section>
                 <section>
                   <h3 className="font-semibold">Peer-to-Peer Transaction Platform</h3>
                   <p>Project Jugaad only facilitates connections between users and does not directly participate in transactions or agreements between individuals.</p>
@@ -217,16 +206,8 @@ const Jugaadrequest = () => {
                   <p>Any disputes or disagreements that arise from transactions must be resolved between the involved users. Project Jugaad team is not responsible for mediating or resolving disputes.</p>
                 </section>
                 <section>
-                  <h3 className="font-semibold">No Warranties or Authenticity Verification</h3>
-                  <p>We do not verify the authenticity or accuracy of the product descriptions provided by users.</p>
-                </section>
-                <section>
                   <h3 className="font-semibold">Adherence to Legal Guidelines</h3>
                   <p>All transactions must comply with local laws. Any illegal activities, such as the sale of prohibited items, will result in immediate account suspension.</p>
-                </section>
-                <section>
-                  <h3 className="font-semibold">Listing Fees</h3>
-                  <p>There are no fees for requesting products, but Project Jugaad reserves the right to introduce a fee structure in the future with prior notice to users.</p>
                 </section>
                 <section>
                   <h3 className="font-semibold">Non-Commercial Use</h3>
@@ -240,6 +221,7 @@ const Jugaadrequest = () => {
             </div>
           </div>
         </div>
+
 
       </div>
     )
