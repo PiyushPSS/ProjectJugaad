@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { Share2, MessageCircle, MoreVertical, UserRound, AlertTriangle, ChevronDown, ChevronUp } from "lucide-react"
+import { Share2, MoreVertical, AlertTriangle, ChevronDown, ChevronUp, Share } from "lucide-react"
 import { toast, Bounce } from 'react-toastify';
 import { calendarMonth } from '../../assets/assets';
+import { user } from '../../assets/user';
+import ShareItemBox from '../../components/ShareItemBox/ShareItem';
 
 const Jugaadrequest = () => {
 
@@ -14,7 +16,15 @@ const Jugaadrequest = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const [isTermsOpen, setIsTermsOpen] = useState(false)
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
+
+  const [userData, setUserData] = useState({});
+
+  const [isShareBoxOpen, setIsShareBoxOpen] = useState(false);
+
+  const toggleShareBox = () => {
+    setIsShareBoxOpen(!isShareBoxOpen);
+  }
 
   const toggleTerms = () => setIsTermsOpen(!isTermsOpen)
 
@@ -57,6 +67,8 @@ const Jugaadrequest = () => {
 
     setRequestData(data);
 
+    setUserData(user);
+
     window.history.replaceState(null, null, "/jugaad-req/" + data[0]._id);
   }
 
@@ -64,13 +76,15 @@ const Jugaadrequest = () => {
     return <div>Loading...</div>
   } else {
 
-    const { _id, Title, Description, CreatedAt, Price, UserFirstName, UserLastName, Category, ShortID } = requestData[0];
+    const { _id, Title, Description, CreatedAt, Price, Category, ShortID } = requestData[0];
+
+    const { UserFirstName, UserLastName, ProfileImage } = userData;
 
     //Destructure the date format.
     const dateObj = new Date(CreatedAt);
 
     const year = dateObj.getFullYear();
-    const month = calendarMonth(dateObj.getMonth() + 1); // Months are 0-indexed, so add 1
+    const month = calendarMonth(dateObj.getMonth());
     const day = dateObj.getDate();
     let hours = dateObj.getHours();
     let minutes = dateObj.getMinutes();
@@ -104,7 +118,7 @@ const Jugaadrequest = () => {
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-gray-300 rounded-full overflow-hidden">
-                  <UserRound className="w-full h-full object-cover" />
+                  <img src={ProfileImage} className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold">{UserFirstName + " " + UserLastName}</h2>
@@ -150,15 +164,23 @@ const Jugaadrequest = () => {
                 navigator.clipboard.writeText('http://localhost:5173/short/' + ShortID);
               }}>
                 <Share2 className="w-4 h-4 mr-2" />
-                Share Item
+                Share This Request
               </button>
-              <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-                <MessageCircle className="w-4 h-4 mr-2" />
-                Chat with {UserFirstName}
+
+              {/* Send the photo of your item button */}
+
+              <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors" onClick={() => {
+                toggleShareBox();
+              }}>
+                <Share className="w-4 h-4 mr-2" />
+                Share Photo of Item
               </button>
             </div>
           </div>
         </div>
+
+        {isShareBoxOpen && <ShareItemBox />}
+
 
         {/* User Terms and Conditions Aggrement */}
 

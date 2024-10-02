@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@talkjs/react": "^0.1.9",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
     "lucide-react": "^0.445.0",
@@ -19,7 +20,8 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",
     "react-toastify": "^10.0.5",
-    "tailwindcss": "^3.4.13"
+    "tailwindcss": "^3.4.13",
+    "talkjs": "^0.26.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

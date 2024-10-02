@@ -40,7 +40,7 @@ const Categories = (props) => {
                     const dateObj = new Date(item.CreatedAt);
 
                     const year = dateObj.getFullYear();
-                    const month = calendarMonth(dateObj.getMonth() + 1); // Months are 0-indexed, so add 1
+                    const month = calendarMonth(dateObj.getMonth()); // Months are 0-indexed, so add 1
                     const day = dateObj.getDate();
                     let hours = dateObj.getHours();
                     let minutes = dateObj.getMinutes();

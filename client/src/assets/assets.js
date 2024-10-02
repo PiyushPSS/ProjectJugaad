@@ -141,7 +141,8 @@ export const CategoryURLList = [
     '/category/pg-rooms',
     '/short',
     '/jugaad-req',
-    "/addRequest"
+    "/addRequest",
+    "/profile",
 ];
 
 export default assets;
