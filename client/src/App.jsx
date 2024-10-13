@@ -10,6 +10,7 @@ import Chat from './pages/chat/chat';
 import About from './pages/aboutUs/about';
 import AddRequestModel from './components/AddRequest/AddRequestModel';
 import Footer from './components/Footer/Footer';
+import WhyUs from './pages/whyUs/why-us';
 
 const App = () => {
 
@@ -25,6 +26,7 @@ const App = () => {
           <Route path='/signup' element={<Signup />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/chat' element={<Chat />} />
+          <Route path='/why-us' element={<WhyUs />} />
           <Route path='/about' element={<About />} />
           <Route path='/jugaad-req/:id' element={<Jugaadrequest />} />
           <Route path='/short/:id' element={<Jugaadrequest />} />

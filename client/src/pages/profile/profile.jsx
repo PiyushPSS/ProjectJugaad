@@ -40,7 +40,7 @@ export default function Profile() {
 
             <div className="space-y-2">
               <label htmlFor="email" className="block text-sm font-medium">College Email</label>
-              <input type="email" id="email" className="w-full px-3 py-2 border rounded-md" defaultValue={Email} />
+              <input type="email" id="email" className="w-full px-3 py-2 border rounded-md bg-gray-200" defaultValue={Email} disabled />
             </div>
 
             <div className="space-y-2">

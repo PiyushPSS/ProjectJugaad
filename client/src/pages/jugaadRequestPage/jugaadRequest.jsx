@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { Share2, MoreVertical, AlertTriangle, ChevronDown, ChevronUp, Share } from "lucide-react"
+import { Share2, MoreVertical, AlertTriangle, ChevronDown, ChevronUp } from "lucide-react"
 import { toast, Bounce } from 'react-toastify';
 import { calendarMonth } from '../../assets/assets';
 import { user } from '../../assets/user';
-import ShareItemBox from '../../components/ShareItemBox/ShareItem';
+// import ShareItemBox from '../../components/ShareItemBox/ShareItem';
 
 const Jugaadrequest = () => {
 
@@ -20,10 +20,16 @@ const Jugaadrequest = () => {
 
   const [userData, setUserData] = useState({});
 
-  const [isShareBoxOpen, setIsShareBoxOpen] = useState(false);
+  // const [isShareBoxOpen, setIsShareBoxOpen] = useState(false);
 
-  const toggleShareBox = () => {
-    setIsShareBoxOpen(!isShareBoxOpen);
+  const [isChatBoxOpen, setIsChatBoxOpen] = useState(false);
+
+  // const toggleShareBox = () => {
+  //   setIsShareBoxOpen(!isShareBoxOpen);
+  // }
+
+  const toggleChatBox = () => {
+    setIsChatBoxOpen(!isChatBoxOpen);
   }
 
   const toggleTerms = () => setIsTermsOpen(!isTermsOpen)
@@ -169,17 +175,26 @@ const Jugaadrequest = () => {
 
               {/* Send the photo of your item button */}
 
-              <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors" onClick={() => {
+              {/* <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors" onClick={() => {
                 toggleShareBox();
               }}>
                 <Share className="w-4 h-4 mr-2" />
                 Share Photo of Item
+              </button> */}
+
+
+              <button className='flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors' onClick={() => {
+                toggleChatBox();
+              }}>
+                Chat with {UserFirstName}
               </button>
             </div>
           </div>
         </div>
 
-        {isShareBoxOpen && <ShareItemBox />}
+        {/* {isShareBoxOpen && <ShareItemBox />} */}
+
+        {isChatBoxOpen && <div className="bg-white shadow-lg rounded-lg overflow-hidden mt-4">Hello</div>}
 
 
         {/* User Terms and Conditions Aggrement */}

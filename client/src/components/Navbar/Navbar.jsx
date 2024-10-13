@@ -12,9 +12,17 @@ const Navbar = () => {
     useEffect(() => {
         if (pathname == '/') {
             setMenu('home');
-        } else if (pathname == '/chat') {
-            setMenu("chat");
-        } else if (pathname == '/about') {
+        }
+        
+        // else if (pathname == '/chat') {
+        //     setMenu("chat");
+        // }
+
+        else if (pathname == '/why-us') {
+            setMenu("why-us");
+        }
+        
+        else if (pathname == '/about') {
             setMenu("about-us");
         } else if (pathname == '/profile') {
             setMenu("profile");
@@ -30,9 +38,13 @@ const Navbar = () => {
                     setMenu("home");
                 }}>home</li></Link>
 
-                <Link to={'/chat'}><li className={menu === "chat" ? "active" : ""} onClick={() => {
+                {/* <Link to={'/chat'}><li className={menu === "chat" ? "active" : ""} onClick={() => {
                     setMenu("chat");
-                }}>chat</li></Link>
+                }}>chat</li></Link> */}
+
+                <Link to={'/why-us'}><li className={menu === "why-us" ? "active" : ""} onClick={() => {
+                    setMenu("why-us");
+                }}>why us</li></Link>
 
                 <Link to={'/profile'}><li className={menu === "profile" ? "active" : ""} onClick={() => {
                     setMenu("profile");
