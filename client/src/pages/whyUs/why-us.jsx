@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Leaf, PiggyBank, Users, Lock, Shield, CheckCircle } from 'lucide-react';
+import assets from '../../assets/assets';
 
 export default function WhyUs() {
   return (
@@ -7,7 +8,7 @@ export default function WhyUs() {
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center text-center text-white">
         <img
-          src=""
+          src={assets.why_us_bg}
           alt="Collaboration and Sharing"
           className="absolute inset-0 object-cover w-full h-full z-0"
         />
@@ -50,8 +51,8 @@ export default function WhyUs() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">How Project Jugaad Works</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <FeatureStep number={1} title="List Your Item" description="Easily add your items for sharing" />
-            <FeatureStep number={2} title="Connect with Borrowers" description="Find people interested in your items" />
+            <FeatureStep number={1} title="Request An Item" description="Easily add your item request" />
+            <FeatureStep number={2} title="Connect with Lenders" description="Find people interested in your request" />
             <FeatureStep number={3} title="Complete the Transaction" description="Securely lend and return items" />
           </div>
         </div>
@@ -94,7 +95,7 @@ export default function WhyUs() {
       </section>
 
       {/* Call-to-Action Footer */}
-      <section className="mt-8 py-20 bg-gradient-to-r from-[#B993D6] to-[#8CA6DB] text-white rounded-lg">
+      <section className="mt-20 py-20 bg-gradient-to-r from-[#B993D6] to-[#8CA6DB] text-white rounded-lg">
         <div className="container mx-auto px-4 text-center items-center">
           <h2 className="text-4xl font-bold">Join Our Community Today!</h2>
           <button className="bg-white text-blue-500 py-3 px-6 rounded-lg mb-8 flex items-center justify-center mx-auto mt-7 hover:bg-black hover:text-white">

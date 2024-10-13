@@ -1,15 +1,61 @@
 import React from 'react'
+import Talk from 'talkjs';
+import { useCallback } from 'react';
 import './chat.css'
 import { Chatbox, Session } from "@talkjs/react";
 
-const Chat = () => {
+const Chat = ({ userRecogID }) => {
+
+  if (userRecogID === null) {
+    return;
+  }
+
+  console.log(userRecogID);
+
+  // const temp1 = prompt("");
+  // const temp2 = prompt("");
+
+
+  const syncUser = useCallback(
+    () =>
+      new Talk.User({
+        id: userRecogID,
+        name: 'Nina',
+        email: 'nina@example.com',
+        photoUrl: 'https://talkjs.com/new-web/avatar-7.jpg',
+        welcomeMessage: 'Hi!',
+      }),
+    []
+  );
+
+  const syncConversation = useCallback((session) => {
+    // JavaScript SDK code here
+    const conversation = session.getOrCreateConversation('new_conversatio');
+
+    const other = new Talk.User({
+      id: 'frank',
+      name: 'Frank',
+      email: 'frank@example.com',
+      photoUrl: 'https://talkjs.com/new-web/avatar-8.jpg',
+      welcomeMessage: 'Hey, how can I help?',
+    });
+    // conversation.setParticipant(session.me);
+    conversation.setParticipant(session.me);
+    conversation.setParticipant(other);
+
+    return conversation;
+  }, []);
+
+
   return (
-    <div className='h-auto'>
-      <Session appId="tDWNIfmG" userId="sample_user_alice">
-        <Chatbox conversationId="sample_conversation" className='h-[600px]' />
-      </Session>
-    </div>
-  )
+    <Session appId="tDWNIfmG" syncUser={syncUser}>
+      {/* <Chatbox conversationId="" className='h-[600px]' /> */}
+      <Chatbox
+        syncConversation={syncConversation}
+        style={{ width: '100%', height: '500px' }}
+      ></Chatbox>
+    </Session >
+  );
 }
 
 export default Chat;

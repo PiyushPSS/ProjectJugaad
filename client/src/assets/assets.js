@@ -14,6 +14,7 @@ import cross_icon from './cross_icon.png'
 import profile_icon from './profile_icon.png'
 import logout_icon from './logout_icon.png'
 import logo_white from './logo_white.png'
+import why_us_bg from './why-us-bg.jpg'
 
 const assets = {
     logo,
@@ -22,7 +23,8 @@ const assets = {
     cross_icon,
     profile_icon,
     logout_icon,
-    logo_white
+    logo_white,
+    why_us_bg
 }
 
 export const categoryName = {

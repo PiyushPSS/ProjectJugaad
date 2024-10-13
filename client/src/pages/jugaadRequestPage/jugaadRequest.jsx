@@ -4,6 +4,7 @@ import { Share2, MoreVertical, AlertTriangle, ChevronDown, ChevronUp } from "luc
 import { toast, Bounce } from 'react-toastify';
 import { calendarMonth } from '../../assets/assets';
 import { user } from '../../assets/user';
+import Chat from '../chat/chat';
 // import ShareItemBox from '../../components/ShareItemBox/ShareItem';
 
 const Jugaadrequest = () => {
@@ -194,7 +195,7 @@ const Jugaadrequest = () => {
 
         {/* {isShareBoxOpen && <ShareItemBox />} */}
 
-        {isChatBoxOpen && <div className="bg-white shadow-lg rounded-lg overflow-hidden mt-4">Hello</div>}
+        {isChatBoxOpen && <Chat userRecogID = {userData._id} />}
 
 
         {/* User Terms and Conditions Aggrement */}
