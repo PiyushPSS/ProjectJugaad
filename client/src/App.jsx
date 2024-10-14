@@ -3,7 +3,6 @@ import Navbar from './components/Navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import Jugaadrequest from './pages/jugaadRequestPage/jugaadRequest';
 import Home from './pages/home/home';
-import Login from './pages/login/login';
 import Signup from './pages/signup/signup';
 import Profile from './pages/profile/profile';
 import Chat from './pages/chat/chat';
@@ -11,6 +10,7 @@ import About from './pages/aboutUs/about';
 import AddRequestModel from './components/AddRequest/AddRequestModel';
 import Footer from './components/Footer/Footer';
 import WhyUs from './pages/whyUs/why-us';
+import LoginPage from './pages/login/login';
 
 const App = () => {
 
@@ -22,7 +22,7 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path='*' element={<Home path={pathname} />} />
-          <Route path='/login' element={<Login />} />
+          <Route path='/login' element={<LoginPage />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/chat' element={<Chat />} />

@@ -24,3 +24,5 @@ cred.js
 *.njsproj
 *.sln
 *.sw?
+
+.env

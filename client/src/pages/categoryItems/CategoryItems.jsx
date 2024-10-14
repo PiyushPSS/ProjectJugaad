@@ -33,9 +33,9 @@ const Categories = (props) => {
                 if (item.Category.toLowerCase() === categoryName.toLowerCase() || categoryName === 'All') {
 
                     // Show only 5 requests max for each categories.
-                    if (++count > 5) {
-                        return;
-                    }
+                    // if (++count > 5) {
+                    //     return;
+                    // }
 
                     const dateObj = new Date(item.CreatedAt);
 
@@ -87,11 +87,11 @@ const Categories = (props) => {
                 }
             })}
 
-            <div className="mx-auto bg-transparent border border-black rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 mb-10 cursor-pointer w-60">
+            {/* <div className="mx-auto bg-transparent border border-black rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 mb-10 cursor-pointer w-60">
                 <div className="p-3">
                     <h3 className="text-lg font-semibold text-gray-800 text-center">view all requests</h3>
                 </div>
-            </div>
+            </div> */}
 
         </>
     )

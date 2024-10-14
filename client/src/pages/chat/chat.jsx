@@ -12,9 +12,7 @@ const Chat = ({ userRecogID }) => {
 
   console.log(userRecogID);
 
-  // const temp1 = prompt("");
-  // const temp2 = prompt("");
-
+  //needed values: my user id, other user id, conversation id.
 
   const syncUser = useCallback(
     () =>
@@ -48,13 +46,15 @@ const Chat = ({ userRecogID }) => {
 
 
   return (
-    <Session appId="tDWNIfmG" syncUser={syncUser}>
-      {/* <Chatbox conversationId="" className='h-[600px]' /> */}
-      <Chatbox
-        syncConversation={syncConversation}
-        style={{ width: '100%', height: '500px' }}
-      ></Chatbox>
-    </Session >
+    <div className='mt-10'>
+      <Session appId="tDWNIfmG" syncUser={syncUser}>
+        {/* <Chatbox conversationId="" className='h-[600px]' /> */}
+        <Chatbox
+          syncConversation={syncConversation}
+          style={{ width: '100%', height: '500px' }}
+        ></Chatbox>
+      </Session >
+    </div>
   );
 }
 

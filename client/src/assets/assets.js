@@ -15,6 +15,9 @@ import profile_icon from './profile_icon.png'
 import logout_icon from './logout_icon.png'
 import logo_white from './logo_white.png'
 import why_us_bg from './why-us-bg.jpg'
+import facebook_icon from './facebook_icon.png'
+import linkedin_icon from './linkedin_icon.png'
+import twitter_icon from './twitter_icon.png'
 
 const assets = {
     logo,
@@ -24,7 +27,10 @@ const assets = {
     profile_icon,
     logout_icon,
     logo_white,
-    why_us_bg
+    why_us_bg,
+    facebook_icon,
+    linkedin_icon,
+    twitter_icon
 }
 
 export const categoryName = {
@@ -110,6 +116,8 @@ export const CategoryURLList = [
     "/profile",
     "/chat",
     "/why-us",
+    "signup",
+    "login"
 ];
 
 export default assets;
