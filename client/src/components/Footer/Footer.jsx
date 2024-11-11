@@ -18,12 +18,12 @@ const Footer = () => {
         </div>
 
         <div className="footer-content-center">
-          <h2>COMPANY</h2>
+          <h2>Quick Links</h2>
           <ul>
             <li>Home</li>
+            <li>Why Us</li>
+            <li>Profile</li>
             <li>About Us</li>
-            <li>Delivery</li>
-            <li>Privacy Policy</li>
           </ul>
         </div>
 
@@ -31,7 +31,7 @@ const Footer = () => {
           <h2>GET IN TOUCH</h2>
           <ul>
             <li>Address: 1234 Street Name, City Name, United States</li>
-            <li>Phone: +123456789</li>
+            <li>Phone: +1234567890</li>
             <li>Email: piyush@projectjugaad.com</li>
           </ul>
         </div>

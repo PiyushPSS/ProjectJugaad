@@ -5,11 +5,13 @@ import { AlertTriangle, ChevronDown, ChevronUp } from "lucide-react"
 
 const AddRequestModel = () => {
 
+    let userData = localStorage.getItem('userData');
+    userData = JSON.parse(userData);
+
     const [Title, setTitle] = React.useState('');
     const [Description, setDescription] = React.useState('');
     const [Price, setPrice] = React.useState('');
     const [Category, setCategory] = useState('Clothes');
-
 
     const [isTermsOpen, setIsTermsOpen] = useState(false);
 
@@ -30,7 +32,7 @@ const AddRequestModel = () => {
         //Adding the data to the URL.
         params.append('Title', Title);
         params.append('Description', Description);
-        params.append('UserID', "1");
+        userData ? params.append('UserID', userData.user._id) : params.append('UserID', "null");
         params.append("CreatedAt", new Date().toISOString());
         params.append('Price', Price);
         params.append("UserFirstName", "Sai");
@@ -158,14 +160,18 @@ const AddRequestModel = () => {
                                     className="max-w-screen-md bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-150 ease-in-out" onClick={() => {
                                         //When the user clicks on the submit button.
 
-                                        if (Title === '' || Description === '' || Price === '' || Category === '') {
-                                            alert('Please fill out all the fields');
-                                            return;
+                                        if (userData == null) {
+                                            alert('Please login to add a request');
+                                        } else {
+                                            if (Title === '' || Description === '' || Price === '' || Category === '') {
+                                                alert('Please fill out all the fields');
+                                                return;
+                                            }
+
+
+                                            //Send the data if it is filled properly.
+                                            sendData();
                                         }
-
-
-                                        //Send the data if it is filled properly.
-                                        sendData();
 
                                     }}>
                                     Submit Request

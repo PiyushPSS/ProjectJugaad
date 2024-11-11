@@ -4,11 +4,21 @@ import { user } from '../../assets/user'
 export default function Profile() {
   const [activeSection, setActiveSection] = useState('profile')
 
-  const { UserFirstName, UserLastName, ProfileImage, ItemsRequested, ItemsShared, Email, UserName, ProfileScore } = user;
+  let userData = localStorage.getItem('userData');
+
+  userData = JSON.parse(userData);
+
+  if (userData == null) {
+    window.location.href = '/login';
+  }
+  
+  
+  const { FirstName, LastName, ItemsRequested, ItemsShared, Email, Username, ProfileScore } = userData.user;
+  
 
   //The Color of the rating button changes depending upon the Profile Score.
   const calcColorOfRating = () => {
-    return ProfileScore > 4 ? 'bg-green-500' : ProfileScore > 3 ? 'bg-yellow-500' : 'bg-red-500'
+    return ProfileScore.$numberDecimal > 4 ? 'bg-green-500' : ProfileScore.$numberDecimal > 3 ? 'bg-yellow-500' : 'bg-red-500'
   }
 
   const renderSettingsContent = () => {
@@ -23,18 +33,18 @@ export default function Profile() {
 
             <div className="space-y-2">
               <label htmlFor="name" className="block text-sm font-medium">User Name</label>
-              <input type="text" id="name" className="w-full px-3 py-2 border rounded-md bg-gray-200" defaultValue={UserName} disabled />
+              <input type="text" id="name" className="w-full px-3 py-2 border rounded-md bg-gray-200" defaultValue={Username} disabled />
             </div>
 
             <div className='flex flex-row justify-between'>
               <div className="space-y-2">
                 <label htmlFor="name" className="block text-sm font-medium">First Name</label>
-                <input type="text" id="name" className="max-w-full px-3 py-2 border rounded-md" defaultValue={UserFirstName} required />
+                <input type="text" id="name" className="max-w-full px-3 py-2 border rounded-md" defaultValue={FirstName} required />
               </div>
 
               <div className="space-y-2">
                 <label htmlFor="name" className="block text-sm font-medium">Last Name</label>
-                <input type="text" id="name" className="max-w-full px-3 py-2 border rounded-md" defaultValue={UserLastName} required />
+                <input type="text" id="name" className="max-w-full px-3 py-2 border rounded-md" defaultValue={LastName} required />
               </div>
             </div>
 
@@ -77,8 +87,6 @@ export default function Profile() {
 
                 // When the user clicks on the save changes button.
 
-
-
               }}>Save Changes</button>
             </div>
           </div>
@@ -93,14 +101,14 @@ export default function Profile() {
             <div className="space-y-2">
               <label htmlFor="notifications" className="block text-sm font-medium">Click the button below if you want to delete your account. Please note that this action is irreversible.</label>
               <div className="space-y-2">
-              <button className='bg-red-600 px-5 py-3 text-white rounded-lg hover:bg-red-900' onClick={() => {
+                <button className='bg-red-600 px-5 py-3 text-white rounded-lg hover:bg-red-900' onClick={() => {
 
-                // When the user clicks on the delete account button.
+                  // When the user clicks on the delete account button.
 
-                
 
-              }}>Delete my account</button>
-            </div>
+
+                }}>Delete my account</button>
+              </div>
             </div>
           </div>
         )
@@ -114,8 +122,8 @@ export default function Profile() {
       <div className="bg-white rounded-3xl shadow-lg p-8 w-full max-w-4xl">
         <div className="flex flex-col space-y-6">
           <div className="flex flex-col items-center">
-            <img src={ProfileImage} className="w-24 h-24 rounded-full object-cover" />
-            <h2 className="text-3xl font-bold mt-4">{UserFirstName + " " + UserLastName}</h2>
+            <img src={user.ProfileImage} className="w-24 h-24 rounded-full object-cover" />
+            <h2 className="text-3xl font-bold mt-4">{FirstName + " " + LastName}</h2>
           </div>
 
           <div className="w-full max-w-4xl mx-auto p-4">
@@ -128,7 +136,7 @@ export default function Profile() {
 
               <div className={calcColorOfRating() + " text-white rounded-xl p-6 flex-1 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"}>
                 <h2 className="font-bold text-lg sm:text-xl text-center mb-2">Profile Score</h2>
-                <p className="font-semibold text-4xl sm:text-5xl text-center">{ProfileScore}</p>
+                <p className="font-semibold text-4xl sm:text-5xl text-center">{ProfileScore.$numberDecimal}</p>
               </div>
 
               <div className="bg-gray-200 text-black rounded-xl p-6 flex-1 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">

@@ -8,6 +8,14 @@ import NotFound from '../../components/NotFound/NotFound';
 import { CategoryURLList, categoryName } from '../../assets/assets';
 
 const Home = ({ path }) => {
+
+
+  const userData = localStorage.getItem('userData');
+
+  if (userData != null) {
+    console.log(userData);
+  }
+
   const [categoryText, setCategoryText] = useState(categoryName.all);
 
   if (CategoryURLList.includes(path) || path.startsWith('/short') || path.startsWith('/jugaad-req')) {
@@ -21,10 +29,6 @@ const Home = ({ path }) => {
           <h2 className="text-2xl font-bold text-gray-800">{categoryText} Recent Requests:</h2>
           <p className='cursor-pointer'><u>view all</u></p>
         </div>
-
-        {/* Add a request button. Using this button, the page will be redirected to the "Add Request" Page */}
-
-        <Link to={'/addRequest'}><button className='bg-violet-500 px-4 py-2 rounded-lg text-lg text-white'>Add a Request</button></Link>
 
         <Routes>
           <Route path="/" element={<Categories name={categoryName.all} setCategoryText={setCategoryText} />} />

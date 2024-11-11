@@ -28,9 +28,9 @@ const userSchema = new mongoose.Schema({
     },
 
     ProfileScore: {
-        type: Number,
+        type: mongoose.Types.Decimal128,
         required: true,
-        default: 3.0
+        default: 4.0
     },
 
     // RefreshToken: {

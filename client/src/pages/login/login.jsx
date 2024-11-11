@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Mail, Lock, LogIn } from 'lucide-react';
+import axios from 'axios';
+import bcrypt from 'bcryptjs';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -20,15 +23,22 @@ const LoginPage = () => {
 
   const sendDataToBackend = ({ email, password }) => {
     // Send the data to the backend
-    console.log('Login attempted', { email, password });
+
+    axios.post('http://localhost:3000/login', { email, password }).then((response) => {
+      if (response.data.status == "success") {
+        // Store the user data in local storage
+        localStorage.setItem('userData', JSON.stringify(response.data));
+        // Redirect to the home page
+        window.location.href = '/';
+      }
+    }).catch((err) => {
+      console.log(err);
+    })
 
     // Clear form fields after submission
-    setEmail('');
-    setPassword('');
+    // setEmail('');
+    // setPassword('');
 
-
-    //Check the data.
-    
   };
 
   const containerStyle = {
@@ -139,7 +149,7 @@ const LoginPage = () => {
           </button>
         </form>
         <p style={{ textAlign: 'center', marginTop: '1rem', fontSize: '14px' }}>
-          Don't have an account? <a href="#" style={{ color: '#1877f2', textDecoration: 'none' }}>Sign up</a>
+          Don't have an account?<Link to={'/signup'}><u>sign up</u></Link>
         </p>
       </div>
     </div>

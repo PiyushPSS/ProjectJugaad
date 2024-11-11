@@ -7,13 +7,17 @@ const Navbar = () => {
 
     const [menu, setMenu] = useState("home");
 
+    let userData = localStorage.getItem('userData');
+
+    userData = JSON.parse(userData);
+
     const pathname = window.location.pathname;
 
     useEffect(() => {
         if (pathname == '/') {
             setMenu('home');
         }
-        
+
         // else if (pathname == '/chat') {
         //     setMenu("chat");
         // }
@@ -21,7 +25,7 @@ const Navbar = () => {
         else if (pathname == '/why-us') {
             setMenu("why-us");
         }
-        
+
         else if (pathname == '/about') {
             setMenu("about-us");
         } else if (pathname == '/profile') {
@@ -55,7 +59,7 @@ const Navbar = () => {
                 }}>about us</li></Link>
             </ul>
             <div className='navbar-right'>
-                <Link to={'/login'}><button>sign in</button></Link>
+                <Link to={userData ? '/logout' : '/login'}><button>{userData ? `logout, ${userData.user.FirstName}` : "sign in"}</button></Link>
             </div>
         </div>
     )

@@ -21,8 +21,6 @@ const Categories = (props) => {
             })
     });
 
-    let count = 0;
-
     return (
         <>
             {JugaadRequests.map((item, index) => {

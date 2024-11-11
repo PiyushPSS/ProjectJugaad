@@ -7,6 +7,7 @@ const RegistrationForm = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  // const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -44,8 +45,8 @@ const RegistrationForm = () => {
   const sendDataToBackend = async ({ firstName, lastName, email, password }) => {
 
     // Hash the password
-    const salt = await bcyrpt.genSalt(10);
-    const hash = await bcyrpt.hash(password, salt);
+    var salt = bcyrpt.genSaltSync(10);
+    var hash = bcyrpt.hashSync(password, salt);
 
     try {
       const data = {
@@ -59,7 +60,13 @@ const RegistrationForm = () => {
       const response = await axios.post('http://localhost:3000/register', data);
 
       // If successful, log the response
-      console.log(response.data);
+      const localData = response.data;
+
+      localStorage.setItem('userData', JSON.stringify(localData));
+
+      //reload the page to the home.
+      window.location.href = '/';
+
     } catch (error) {
       // If an error occurs, log the error
       console.log(error);
@@ -146,6 +153,21 @@ const RegistrationForm = () => {
             placeholder="johndoe@kiet.edu"
           />
         </div>
+        {/* <div>
+          <label htmlFor="phone" style={labelStyle}>
+            <Mail size={18} style={iconStyle} />
+            Phone Number
+          </label>
+          <input
+            type="number"
+            id="phone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            required
+            style={inputStyle}
+            placeholder="+918338495043"
+          />
+        </div> */}
         <div>
           <label htmlFor="password" style={labelStyle}>
             <Lock size={18} style={iconStyle} />

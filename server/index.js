@@ -6,6 +6,7 @@ import { generateFromEmail } from "unique-username-generator";
 import { addRequest, allData, search, shortURL } from './cred.js';
 import { User } from './models/user.js';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 import 'dotenv/config';
 
 const JugaadRequest = mongoose.model('requests', requestSchema);
@@ -36,6 +37,50 @@ app.get(search, (req, res) => {
     }).catch((err) => {
         console.log("Error fetching the data: " + err);
     });
+})
+
+
+//login a user
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    User.findOne({ Email: email }).then((user) => {
+        if (!user) {
+            res.send("User not found");
+        } else {
+
+            bcrypt.compare(password, user.Password, (err, isMatch) => {
+                if (err) {
+                    console.log(err);
+                }
+
+                console.log(isMatch);
+
+                if (!isMatch) {
+                    res.send("Invalid credentials");
+                } else {
+                    jwt.sign({ id: user._id, firstname: user.FirstName, lastname: user.LastName, email: user.Email },
+                        process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' }, (err, token) => {
+                            if (err) {
+                                console.log(err);
+                            }
+
+                            const localData = {
+                                status: "success",
+                                sign: token,
+                                user
+                            }
+
+                            res.send(localData);
+
+                        });
+                }
+            })
+        }
+
+    }).catch((err) => {
+        console.log(err);
+    })
 })
 
 //get the data for a particular shortURL
@@ -72,18 +117,21 @@ app.post('/register', (req, res) => {
     });
 
     newUser.save().then((user) => {
-        console.log("User added successfully");
 
         jwt.sign({ id: user._id, firstname: user.FirstName, lastname: user.LastName, email: user.Email },
             process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' }, (err, token) => {
                 if (err) {
                     console.log(err);
                 }
-                
-                console.log(token);
-            });
 
-        res.send("User added successfully");
+                const localData = {
+                    sign: token,
+                    user
+                }
+
+                res.send(localData);
+
+            });
 
     }).catch((err) => {
         console.log(err);

@@ -11,6 +11,7 @@ import AddRequestModel from './components/AddRequest/AddRequestModel';
 import Footer from './components/Footer/Footer';
 import WhyUs from './pages/whyUs/why-us';
 import LoginPage from './pages/login/login';
+import LogoutPage from './pages/logout/logout';
 
 const App = () => {
 
@@ -31,6 +32,7 @@ const App = () => {
           <Route path='/jugaad-req/:id' element={<Jugaadrequest />} />
           <Route path='/short/:id' element={<Jugaadrequest />} />
           <Route path='/addRequest' element={<AddRequestModel />} />
+          <Route path='/logout' element={<LogoutPage />} />
         </Routes>
       </div>
       <Footer />
