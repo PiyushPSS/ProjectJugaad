@@ -36,8 +36,8 @@ const LoginPage = () => {
     })
 
     // Clear form fields after submission
-    // setEmail('');
-    // setPassword('');
+    setEmail('');
+    setPassword('');
 
   };
 
@@ -124,7 +124,7 @@ const LoginPage = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
               style={inputStyle}
-              placeholder="youremail@college.edu"
+              placeholder="youremail@kiet.edu"
             />
           </div>
           <div>

@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="footer-content">
         <div className="footer-content-left">
           <img src={assets.logo_white} alt="logo" />
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur explicabo nostrum quae ipsam sapiente, quaerat repudiandae. Nam distinctio, voluptates molestias obcaecati officiis explicabo consequuntur nobis sint quia alias doloremque, ex delectus voluptatum excepturi?</p>
+          <p>Project Jugaad is a unique platform developed to bring convenience and collaboration to the KIET community. Designed specifically for students and faculty, it enables the safe and easy sharing of everyday essentials. Whether you're looking to borrow something or lend a helping hand, Project Jugaad fosters a sense of community and resourcefulness.</p>
 
           <div className="footer-social-icons">
             <img src={assets.facebook_icon} alt="Facebook logo" />
