@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Lock, LogIn } from 'lucide-react';
 import axios from 'axios';
-import bcrypt from 'bcryptjs';
 import { Link } from 'react-router-dom';
 
 const LoginPage = () => {

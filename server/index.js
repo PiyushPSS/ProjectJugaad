@@ -103,6 +103,17 @@ app.post(addRequest, (req, res) => {
 })
 
 
+//delete a request.
+app.delete('/delete', (req, res) => {
+    JugaadRequest.deleteOne({ _id: req.query._id }).then(() => {
+        res.send("Request deleted successfully");
+    }).catch((err) => {
+        console.log(err);
+    }
+    )
+})
+
+
 //adding a user.
 app.post('/register', (req, res) => {
     const { FirstName, LastName, Email, Password } = req.body;

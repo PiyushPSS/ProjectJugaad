@@ -35,7 +35,8 @@ const AddRequestModel = () => {
         userData ? params.append('UserID', userData.user._id) : params.append('UserID', "null");
         params.append("CreatedAt", new Date().toISOString());
         params.append('Price', Price);
-        params.append("UserFirstName", "Sai");
+        params.append("UserFirstName", userData.user.FirstName);
+        params.append("UserLastName", userData.user.LastName)
         params.append('Category', Category);
         params.append('ShortID', shortID);
 

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { Share2, MoreVertical, AlertTriangle, ChevronDown, ChevronUp } from "lucide-react"
+import { Share2, MoreVertical, AlertTriangle, ChevronDown, ChevronUp, Share } from "lucide-react"
 import { toast, Bounce } from 'react-toastify';
 import { calendarMonth } from '../../assets/assets';
 import { user } from '../../assets/user';
 import Chat from '../chat/chat';
-// import ShareItemBox from '../../components/ShareItemBox/ShareItem';
+import axios from 'axios';
+import ShareItemBox from '../../components/ShareItemBox/ShareItem';
 
 const Jugaadrequest = () => {
 
@@ -19,15 +20,13 @@ const Jugaadrequest = () => {
 
   const [isTermsOpen, setIsTermsOpen] = useState(false);
 
-  const [userData, setUserData] = useState({});
-
-  // const [isShareBoxOpen, setIsShareBoxOpen] = useState(false);
+  const [isShareBoxOpen, setIsShareBoxOpen] = useState(false);
 
   const [isChatBoxOpen, setIsChatBoxOpen] = useState(false);
 
-  // const toggleShareBox = () => {
-  //   setIsShareBoxOpen(!isShareBoxOpen);
-  // }
+  const toggleShareBox = () => {
+    setIsShareBoxOpen(!isShareBoxOpen);
+  }
 
   const toggleChatBox = () => {
     setIsChatBoxOpen(!isChatBoxOpen);
@@ -45,6 +44,20 @@ const Jugaadrequest = () => {
 
   }, []);
 
+  const reportSend = () => {
+    toast("Report has been sent regarding this request.👍", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
+  }
+
   const shareToast = () => {
     toast("Request link has been copied to clipboard⚡", {
       position: "top-right",
@@ -58,7 +71,6 @@ const Jugaadrequest = () => {
       transition: Bounce,
     });
   }
-
 
   const fetchData = async () => {
 
@@ -74,7 +86,7 @@ const Jugaadrequest = () => {
 
     setRequestData(data);
 
-    setUserData(user);
+    console.log(data);
 
     window.history.replaceState(null, null, "/jugaad-req/" + data[0]._id);
   }
@@ -83,9 +95,7 @@ const Jugaadrequest = () => {
     return <div>Loading...</div>
   } else {
 
-    const { _id, Title, Description, CreatedAt, Price, Category, ShortID } = requestData[0];
-
-    const { UserFirstName, UserLastName, ProfileImage } = userData;
+    const { _id, Title, Description, CreatedAt, Price, Category, ShortID, UserFirstName, UserLastName } = requestData[0];
 
     //Destructure the date format.
     const dateObj = new Date(CreatedAt);
@@ -115,6 +125,20 @@ const Jugaadrequest = () => {
       completeTime = day + " " + month + ", " + year + " at " + hours + ":" + minutes + " AM";
     }
 
+    const requestDeleteAction = () => {
+
+      //Request Deletion Action
+      console.log(_id);
+
+      axios.delete('http://localhost:3000/delete?' + "_id=" + _id).then((response) => {
+        console.log(response);
+        window.location.href = '/';
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
+
+
     return (
       <div className="container mx-auto p-4 mt-5">
 
@@ -125,7 +149,7 @@ const Jugaadrequest = () => {
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-gray-300 rounded-full overflow-hidden">
-                  <img src={ProfileImage} className="w-full h-full object-cover" />
+                  <img src={user.ProfileImage} className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold">{UserFirstName + " " + UserLastName}</h2>
@@ -148,10 +172,25 @@ const Jugaadrequest = () => {
                         // When the user clicks on the request report button.
 
                         console.log('Report clicked')
+                        reportSend();
                         setIsMenuOpen(false)
                       }}
                     >
                       Report Request
+                    </button>
+
+                    <button
+                      className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                      onClick={() => {
+
+                        // When the user clicks on the request report button.
+
+                        console.log('Delete Request clicked')
+                        requestDeleteAction();
+                        setIsMenuOpen(false)
+                      }}
+                    >
+                      Delete Request
                     </button>
                   </div>
                 )}
@@ -166,36 +205,37 @@ const Jugaadrequest = () => {
               <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">{Category}</span>
             </div>
             <div className="flex justify-between">
-              <button className="flex items-center px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors" onClick={() => {
-                shareToast();
-                navigator.clipboard.writeText('http://localhost:5173/short/' + ShortID);
-              }}>
+              <button className="flex items-center px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                onClick={() => {
+                  shareToast();
+                  navigator.clipboard.writeText('http://localhost:5173/short/' + ShortID);
+                }}>
                 <Share2 className="w-4 h-4 mr-2" />
                 Share This Request
               </button>
 
               {/* Send the photo of your item button */}
 
-              {/* <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors" onClick={() => {
+              <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors" onClick={() => {
                 toggleShareBox();
               }}>
                 <Share className="w-4 h-4 mr-2" />
                 Share Photo of Item
-              </button> */}
+              </button>
 
 
-              <button className='flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors' onClick={() => {
+              {/* <button className='flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors' onClick={() => {
                 toggleChatBox();
               }}>
                 Chat with {UserFirstName}
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
 
-        {/* {isShareBoxOpen && <ShareItemBox />} */}
+        {isShareBoxOpen && <ShareItemBox />}
 
-        {isChatBoxOpen && <Chat userRecogID = {userData._id} />}
+        {/* {isChatBoxOpen && <Chat userRecogID={userData._id} />} */}
 
 
         {/* User Terms and Conditions Aggrement */}

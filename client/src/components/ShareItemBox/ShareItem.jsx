@@ -17,13 +17,13 @@ const ShareItemBox = () => {
         >
             <Plus />
             <h1 className='ml-3'>Share Your Item</h1>
-            {/* <input
+            <input
                 type="file"
                 accept='image/png, image/jpeg, image/jpg'
                 ref={fileInputRef}
                 style={{ display: 'none' }}
                 onChange={(e) => {
-                    // We have got the files here.
+                    // We have got the files here.                    
 
                     const { name, size } = e.target.files[0];
 
@@ -31,13 +31,13 @@ const ShareItemBox = () => {
                         alert("Please input a file.")
                     } else {
 
-                        
+
                     }
 
                 }}
-            /> */}
+            />
         </div>
     );
 }
 
-export default ShareItemBox
+export default ShareItemBox;
