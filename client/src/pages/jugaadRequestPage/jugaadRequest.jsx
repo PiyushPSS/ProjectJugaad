@@ -7,6 +7,7 @@ import { user } from '../../assets/user';
 import Chat from '../chat/chat';
 import axios from 'axios';
 import ShareItemBox from '../../components/ShareItemBox/ShareItem';
+import ImageListBox from '../../components/ImageListBox/ImageListBox';
 
 const Jugaadrequest = () => {
 
@@ -20,12 +21,30 @@ const Jugaadrequest = () => {
 
   const [isTermsOpen, setIsTermsOpen] = useState(false);
 
+  const [isImageListBoxOpen, setIsImageListBoxOpen] = useState(false);
+
   const [isShareBoxOpen, setIsShareBoxOpen] = useState(false);
 
   const [isChatBoxOpen, setIsChatBoxOpen] = useState(false);
 
+  const [imageDataShared, setImageDataShared] = useState([]);
+
+  const [shareFlag, setShareFlag] = useState(false);
+
+  let userLoggedIn = localStorage.getItem('userData');
+  userLoggedIn = JSON.parse(userLoggedIn);
+
   const toggleShareBox = () => {
-    setIsShareBoxOpen(!isShareBoxOpen);
+    if (shareFlag) {
+      alert('You have already shared the image of this product.');
+      return;
+    } else {
+      setIsShareBoxOpen(!isShareBoxOpen);
+    }
+  }
+
+  const toggleImageListBox = () => {
+    setIsImageListBoxOpen(!isImageListBoxOpen);
   }
 
   const toggleChatBox = () => {
@@ -42,7 +61,31 @@ const Jugaadrequest = () => {
     //As soon as the page loads, retreive the data from the database.
     fetchData();
 
+    //Load the product data from the database regarding whether or not user has made the image request.
+    getProductImageRequest();
+
+    console.log("re render");
+
+    imageDataShared.filter((item) => {
+      if (item.ProductIdPlusImageUploadedBy == (requestData[0]._id + "-" + userLoggedIn.user._id)) {
+        console.log(item.ProductIdPlusImageUploadedBy);
+        console.log(requestData[0]._id + "-" + userLoggedIn.user._id);
+
+        setShareFlag(true);
+      }
+    });
+
+
   }, []);
+
+  const getProductImageRequest = async () => {
+
+    axios.get('http://localhost:3000/all_images').then((response) => {
+      setImageDataShared(response.data);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
 
   const reportSend = () => {
     toast("Report has been sent regarding this request.👍", {
@@ -216,12 +259,17 @@ const Jugaadrequest = () => {
 
               {/* Send the photo of your item button */}
 
-              <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors" onClick={() => {
+              {userLoggedIn ? (userLoggedIn.user._id == requestData[0].UserID) ? <button className="flex items-center px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700 transition-colors" onClick={() => {
+                toggleImageListBox();
+              }}>
+                <Share className="w-4 h-4 mr-2" />
+                See the Shared Photos
+              </button> : <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors" onClick={() => {
                 toggleShareBox();
               }}>
                 <Share className="w-4 h-4 mr-2" />
                 Share Photo of Item
-              </button>
+              </button> : null}
 
 
               {/* <button className='flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors' onClick={() => {
@@ -233,7 +281,9 @@ const Jugaadrequest = () => {
           </div>
         </div>
 
-        {isShareBoxOpen && <ShareItemBox />}
+        {isShareBoxOpen && <ShareItemBox productData={requestData} shareFlag={setShareFlag} />}
+
+        {isImageListBoxOpen && <ImageListBox imageDataList={imageDataShared} />}
 
         {/* {isChatBoxOpen && <Chat userRecogID={userData._id} />} */}
 

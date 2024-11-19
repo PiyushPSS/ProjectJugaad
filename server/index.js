@@ -7,21 +7,68 @@ import { addRequest, allData, search, shortURL } from './cred.js';
 import { User } from './models/user.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
 import 'dotenv/config';
+import cloudinary from 'cloudinary';
+import { ImageUpload } from './models/ImageUploadSchema.js';
+
+// Ensure 'uploads' directory exists
+if (!fs.existsSync('./uploads')) {
+    fs.mkdirSync('./uploads');
+}
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME_CLOUDINARY,
+    api_key: process.env.CLOUD_API_KEY_CLOUDINARY,
+    api_secret: process.env.CLOUD_API_SECRET_CLOUDINARY,
+    secure: true,
+});
+
+console.log("Cloudinary configured successfully");
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './uploads'); // Upload directory
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`); // Unique file name
+    }
+});
+
+const upload = multer({
+    storage,
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB size limit
+    fileFilter: (req, file, cb) => {
+        const fileTypes = /jpeg|jpg|png/;
+        const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
+        const mimeType = fileTypes.test(file.mimetype);
+
+        if (extName && mimeType) {
+            cb(null, true);
+        } else {
+            cb(new Error("Only images (jpeg, jpg, png) are allowed!"));
+        }
+    }
+});
 
 const JugaadRequest = mongoose.model('requests', requestSchema);
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+// Database connection
 mongoose.connect(process.env.MONGOURL).then(() => {
     console.log("Connected to the database");
 }).catch((err) => {
     console.log(err);
 });
 
-//get all the data
+// Get all data
 app.get(allData, (req, res) => {
     JugaadRequest.find({}).sort({ "CreatedAt": -1 }).then((data) => {
         res.send(data);
@@ -30,17 +77,16 @@ app.get(allData, (req, res) => {
     });
 });
 
-//search for a particular request
+// Search for a particular request
 app.get(search, (req, res) => {
     JugaadRequest.find({ _id: req.query._id }).then((data) => {
         res.send(data);
     }).catch((err) => {
         console.log("Error fetching the data: " + err);
     });
-})
+});
 
-
-//login a user
+// Login a user
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
 
@@ -48,13 +94,10 @@ app.post('/login', (req, res) => {
         if (!user) {
             res.send("User not found");
         } else {
-
             bcrypt.compare(password, user.Password, (err, isMatch) => {
                 if (err) {
                     console.log(err);
                 }
-
-                console.log(isMatch);
 
                 if (!isMatch) {
                     res.send("Invalid credentials");
@@ -69,52 +112,89 @@ app.post('/login', (req, res) => {
                                 status: "success",
                                 sign: token,
                                 user
-                            }
+                            };
 
                             res.send(localData);
-
                         });
                 }
-            })
+            });
         }
-
     }).catch((err) => {
         console.log(err);
-    })
-})
+    });
+});
 
-//get the data for a particular shortURL
+// Get the data for a particular shortURL
 app.get(shortURL, (req, res) => {
     JugaadRequest.find({ ShortID: req.query.ShortID }).then((data) => {
         res.send(data);
     }).catch((err) => {
         console.log("Error fetching the data: " + err);
     });
-})
+});
 
-//add a new request
+// Add a new request
 app.post(addRequest, (req, res) => {
     const newRequest = new JugaadRequest(req.query);
     newRequest.save().then(() => {
         res.send("Request added successfully");
     }).catch((err) => {
         console.log(err);
-    })
-})
+    });
+});
 
-
-//delete a request.
+// Delete a request
 app.delete('/delete', (req, res) => {
     JugaadRequest.deleteOne({ _id: req.query._id }).then(() => {
         res.send("Request deleted successfully");
     }).catch((err) => {
         console.log(err);
+    });
+});
+
+// Upload photo
+app.post('/upload_photo', upload.single('file'), (req, res) => {
+    try {
+        const { productUploadedBy, photoUploadedBy, productID } = req.body;
+
+        console.log('File Info:', req.file);
+        console.log('Metadata:', { productUploadedBy, photoUploadedBy, productID });
+
+        //send to cloudinary
+        cloudinary.v2.uploader.upload(req.file.path, { folder: 'jugaad' }, (error, result) => {
+            if (error) {
+                console.log('Error uploading image:', error);
+                return;
+            }
+
+            console.log('Cloudinary Result:', result);
+
+            //add to database.
+            const newImageUpload = new ImageUpload({
+                ProductID: productID,
+                ProductUploadedBy: productUploadedBy,
+                ImageUploadedBy: photoUploadedBy,
+                ImageURL: result.secure_url,
+                ProductIdPlusImageUploadedBy: `${productID}-${photoUploadedBy}`
+            });
+
+            newImageUpload.save().then(() => {
+                console.log('Image uploaded successfully!');
+            }).catch((err) => {
+                console.log('Error uploading image:', err);
+            });
+        })
+
+
+        res.status(200).send({
+            message: 'File uploaded successfully!'
+        });
+    } catch (error) {
+        res.status(500).send({ error: error.message });
     }
-    )
-})
+});
 
-
-//adding a user.
+// Register a new user
 app.post('/register', (req, res) => {
     const { FirstName, LastName, Email, Password } = req.body;
     const username = generateFromEmail(Email);
@@ -128,7 +208,6 @@ app.post('/register', (req, res) => {
     });
 
     newUser.save().then((user) => {
-
         jwt.sign({ id: user._id, firstname: user.FirstName, lastname: user.LastName, email: user.Email },
             process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' }, (err, token) => {
                 if (err) {
@@ -138,18 +217,25 @@ app.post('/register', (req, res) => {
                 const localData = {
                     sign: token,
                     user
-                }
+                };
 
                 res.send(localData);
-
             });
-
     }).catch((err) => {
         console.log(err);
-    })
-})
+    });
+});
 
-//listen to the port
+// Get all images
+app.get('/all_images', (req, res) => {
+    ImageUpload.find({}).then((data) => {
+        res.send(data);
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+// Listen to the port
 app.listen(3000, () => {
     console.log('Server running on port 3000');
-})
+});
