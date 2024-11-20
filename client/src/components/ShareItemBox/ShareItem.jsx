@@ -51,10 +51,9 @@ const ShareItemBox = (props) => {
 
                 if (response.status == 200) {
                     alert("File uploaded successfully!");
+                    props.setShareFlag(true);
 
-                    // props.shareFlag(true);
-
-                    window.location.reload();
+                    props.toggleShareBox()
 
                 }
             })

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { Share2, MoreVertical, AlertTriangle, ChevronDown, ChevronUp, Share } from "lucide-react"
 import { toast, Bounce } from 'react-toastify';
@@ -63,19 +63,6 @@ const Jugaadrequest = () => {
 
     //Load the product data from the database regarding whether or not user has made the image request.
     getProductImageRequest();
-
-    console.log("re render");
-
-    imageDataShared.filter((item) => {
-      if (item.ProductIdPlusImageUploadedBy == (requestData[0]._id + "-" + userLoggedIn.user._id)) {
-        console.log(item.ProductIdPlusImageUploadedBy);
-        console.log(requestData[0]._id + "-" + userLoggedIn.user._id);
-
-        setShareFlag(true);
-      }
-    });
-
-
   }, []);
 
   const getProductImageRequest = async () => {
@@ -85,6 +72,22 @@ const Jugaadrequest = () => {
     }).catch((err) => {
       console.log(err);
     })
+  }
+
+  const setShareFlagFUnction = () => {
+
+    console.log("Function called");
+    if (!shareFlag) {
+      imageDataShared.filter((item) => {
+        //requestData is product data.
+        if (item.ProductIdPlusImageUploadedByPlusProductUploadedBy == (requestData[0]._id + "-" + userLoggedIn.user._id + "-" + requestData[0].UserID)) {
+          console.log(item.ProductIdPlusImageUploadedByPlusProductUploadedBy);
+          console.log(requestData[0]._id + "-" + userLoggedIn.user._id);
+
+          setShareFlag(true);
+        }
+      })
+    }
   }
 
   const reportSend = () => {
@@ -181,9 +184,11 @@ const Jugaadrequest = () => {
       });
     }
 
-
     return (
+
       <div className="container mx-auto p-4 mt-5">
+
+        {setShareFlagFUnction()}
 
         <h1 className="text-3xl font-bold mb-4">{Category} Item Requested</h1>
 
@@ -216,7 +221,7 @@ const Jugaadrequest = () => {
 
                         console.log('Report clicked')
                         reportSend();
-                        setIsMenuOpen(false)
+                        setIsMenuOpen(false);
                       }}
                     >
                       Report Request
@@ -281,9 +286,9 @@ const Jugaadrequest = () => {
           </div>
         </div>
 
-        {isShareBoxOpen && <ShareItemBox productData={requestData} shareFlag={setShareFlag} />}
+        {isShareBoxOpen && <ShareItemBox productData={requestData} setShareFlag={setShareFlag} toggleShareBox={toggleShareBox} />}
 
-        {isImageListBoxOpen && <ImageListBox imageDataList={imageDataShared} />}
+        {isImageListBoxOpen && <ImageListBox imageDataList={imageDataShared} productData={requestData} loggedInUserData = {userLoggedIn}/>}
 
         {/* {isChatBoxOpen && <Chat userRecogID={userData._id} />} */}
 

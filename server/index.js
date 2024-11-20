@@ -169,13 +169,15 @@ app.post('/upload_photo', upload.single('file'), (req, res) => {
 
             console.log('Cloudinary Result:', result);
 
+            fs.unlinkSync(req.file.path); //delete the file from uploads folder
+
             //add to database.
             const newImageUpload = new ImageUpload({
                 ProductID: productID,
                 ProductUploadedBy: productUploadedBy,
                 ImageUploadedBy: photoUploadedBy,
                 ImageURL: result.secure_url,
-                ProductIdPlusImageUploadedBy: `${productID}-${photoUploadedBy}`
+                ProductIdPlusImageUploadedByPlusProductUploadedBy: `${productID}-${photoUploadedBy}-${productUploadedBy}`
             });
 
             newImageUpload.save().then(() => {
