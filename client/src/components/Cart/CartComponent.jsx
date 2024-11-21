@@ -1,11 +1,14 @@
 import { X, ShoppingCart, CreditCard, AlertTriangle } from 'lucide-react'
-import React from 'react'
+import React, { useState } from 'react'
+import RazorpayComponent from './RazorpayComponent';
 
 const CartComponent = ({ setShowCart, productData, loggedInUserData, imageData }) => {
     console.log(productData);
 
+    const [showRazorpay, setShowRazorPay] = useState(false);
+
     const paymentHandling = () => {
-        
+        setShowRazorPay(true);
     }
 
     return (
@@ -81,6 +84,8 @@ const CartComponent = ({ setShowCart, productData, loggedInUserData, imageData }
                             Proceed to Checkout
                         </button>
                     </div>
+
+                    {showRazorpay && <RazorpayComponent productData={productData[0]} />}
                 </div>
             </div>
         </div>
