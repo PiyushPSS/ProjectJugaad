@@ -1,15 +1,55 @@
 import { X, ShoppingCart, CreditCard, AlertTriangle } from 'lucide-react'
 import React, { useState } from 'react'
 import RazorpayComponent from './RazorpayComponent';
+import axios from 'axios';
 
 const CartComponent = ({ setShowCart, productData, loggedInUserData, imageData }) => {
     console.log(productData);
 
-    const [showRazorpay, setShowRazorPay] = useState(false);
+    // const [showRazorpay, setShowRazorPay] = useState(false);
 
     const paymentHandling = () => {
-        setShowRazorPay(true);
+        // setShowRazorPay(true);
+
+        itemPurchased();
+
+        const data = {
+            ProductID: productData._id,
+            ProductUploadedBy: productData.UserID,
+            ImageUploadedBy: imageData.ImageUploadedBy,
+            ImageID: imageData._id,
+            Amount: productData.Price,
+            TransactionStatus: 'Success',
+            OrderID: 'ORD' + Math.floor(Math.random() * 1000000)
+        }
+
+        setTimeout(()=> {
+            const response = axios.post('http://localhost:3000/orders', data);
+            response.then((res) => {
+                console.log(res);
+
+                if(res.status == 200) {
+
+                    window.location.href = '/';
+                }
+            })
+        }, 3000);
+
     }
+
+    const itemPurchased = () => {
+        toast("Payment Succeeded✅", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        });
+      }
 
     return (
         <div id='cart' className='fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50'>
@@ -85,7 +125,7 @@ const CartComponent = ({ setShowCart, productData, loggedInUserData, imageData }
                         </button>
                     </div>
 
-                    {showRazorpay && <RazorpayComponent productData={productData[0]} />}
+                    {/* {showRazorpay && <RazorpayComponent productData={productData[0]} />} */}
                 </div>
             </div>
         </div>

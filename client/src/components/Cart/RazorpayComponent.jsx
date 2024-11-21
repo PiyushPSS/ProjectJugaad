@@ -1,7 +1,10 @@
 import React from 'react'
 import { RazorPayOptions } from '../../../RazorPayOptions';
+import Razorpay from 'razorpay'
 
-const RazorpayComponent = (productData) => {
+const RazorpayComponent = ({ productData }) => {
+
+    console.log(productData.Price)
 
     var rzp1 = new Razorpay(RazorPayOptions(productData.Price));
 
@@ -11,7 +14,7 @@ const RazorpayComponent = (productData) => {
 
     return (
         <div>
-            {openRazorpay}
+            <button onClick={openRazorpay}>Pay Now</button>
         </div>
     )
 }

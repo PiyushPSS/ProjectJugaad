@@ -13,6 +13,7 @@ import fs from 'fs';
 import 'dotenv/config';
 import cloudinary from 'cloudinary';
 import { ImageUpload } from './models/ImageUploadSchema.js';
+import { Transaction } from './models/TransactionSchema.js';
 
 // Ensure 'uploads' directory exists
 if (!fs.existsSync('./uploads')) {
@@ -236,6 +237,35 @@ app.get('/all_images', (req, res) => {
         console.log(err);
     });
 });
+
+app.post('/orders', (req, res) => {
+    const { productID, ProductUploadedBy, ImageUploadedBy, ImageID, Amount, TransactionStatus, OrderID } = req.body;
+
+    const newTransaction = new Transaction({
+        ProductID: productID,
+        ProductUploadedBy: ProductUploadedBy,
+        ImageUploadedBy: ImageUploadedBy,
+        ImageID: ImageID,
+        Amount: Amount,
+        TransactionStatus: TransactionStatus,
+        OrderID: OrderID
+    });
+
+    newTransaction.save().then(() => {
+        console.log("Transaction added successfully");
+        res.status(200).send("Transaction added successfully");
+    }).catch((err) => {
+        console.log(err);
+    });
+})
+
+app.get('/transactions', (req, res) => {
+    Transaction.find({}).then((data) => {
+        res.send(data);
+    }).catch((err) => {
+        console.log(err);
+    });
+})
 
 // Listen to the port
 app.listen(3000, () => {

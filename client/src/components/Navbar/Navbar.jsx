@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react'
 import './Navbar.css'
 import assets from '../../assets/assets.js';
 import { Link } from 'react-router-dom';
+import { CalendarArrowUpIcon } from 'lucide-react';
+import ReportComponent from '../Report/ReportComponent.jsx';
 
 const Navbar = () => {
 
     const [menu, setMenu] = useState("home");
+
+    const [showReport, setShowReport] = useState(false);
 
     let userData = localStorage.getItem('userData');
 
@@ -59,8 +63,13 @@ const Navbar = () => {
                 }}>about us</li></Link>
             </ul>
             <div className='navbar-right'>
+                <CalendarArrowUpIcon className='cursor-pointer' onClick={() => {
+                    setShowReport(true);
+                }} setTransactionComponent={setShowReport}/>
                 <Link to={userData ? '/logout' : '/login'}><button>{userData ? `logout, ${userData.user.FirstName}` : "sign in"}</button></Link>
             </div>
+
+            {showReport && <ReportComponent setTransactionComponent={setShowReport} />}
         </div>
     )
 }
