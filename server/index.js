@@ -239,10 +239,10 @@ app.get('/all_images', (req, res) => {
 });
 
 app.post('/orders', (req, res) => {
-    const { productID, ProductUploadedBy, ImageUploadedBy, ImageID, Amount, TransactionStatus, OrderID } = req.body;
+    const { ProductID, ProductUploadedBy, ImageUploadedBy, ImageID, Amount, TransactionStatus, OrderID } = req.body;
 
     const newTransaction = new Transaction({
-        ProductID: productID,
+        ProductID: ProductID,
         ProductUploadedBy: ProductUploadedBy,
         ImageUploadedBy: ImageUploadedBy,
         ImageID: ImageID,

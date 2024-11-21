@@ -11,9 +11,20 @@ const Navbar = () => {
 
     const [showReport, setShowReport] = useState(false);
 
+    const [isAdmin, setIsAdmin] = useState(null);
+
     let userData = localStorage.getItem('userData');
 
     userData = JSON.parse(userData);
+
+    useEffect(() => {
+
+        if (userData) {
+            if (userData.user.Email == "admin@kiet.edu") {
+                setIsAdmin(true);
+            }
+        }
+    })
 
     const pathname = window.location.pathname;
 
@@ -63,9 +74,9 @@ const Navbar = () => {
                 }}>about us</li></Link>
             </ul>
             <div className='navbar-right'>
-                <CalendarArrowUpIcon className='cursor-pointer' onClick={() => {
+                {<CalendarArrowUpIcon className='cursor-pointer' onClick={() => {
                     setShowReport(true);
-                }} setTransactionComponent={setShowReport}/>
+                }} setTransactionComponent={setShowReport} />}
                 <Link to={userData ? '/logout' : '/login'}><button>{userData ? `logout, ${userData.user.FirstName}` : "sign in"}</button></Link>
             </div>
 

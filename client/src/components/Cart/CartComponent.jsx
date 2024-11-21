@@ -2,11 +2,12 @@ import { X, ShoppingCart, CreditCard, AlertTriangle } from 'lucide-react'
 import React, { useState } from 'react'
 import RazorpayComponent from './RazorpayComponent';
 import axios from 'axios';
+import { Bounce, toast } from 'react-toastify';
 
 const CartComponent = ({ setShowCart, productData, loggedInUserData, imageData }) => {
-    console.log(productData);
 
     // const [showRazorpay, setShowRazorPay] = useState(false);
+    console.log(productData[0]._id);
 
     const paymentHandling = () => {
         // setShowRazorPay(true);
@@ -14,23 +15,31 @@ const CartComponent = ({ setShowCart, productData, loggedInUserData, imageData }
         itemPurchased();
 
         const data = {
-            ProductID: productData._id,
-            ProductUploadedBy: productData.UserID,
+            ProductID: productData[0]._id,
+            ProductUploadedBy: productData[0].UserID,
             ImageUploadedBy: imageData.ImageUploadedBy,
             ImageID: imageData._id,
-            Amount: productData.Price,
+            Amount: productData[0].Price,
             TransactionStatus: 'Success',
             OrderID: 'ORD' + Math.floor(Math.random() * 1000000)
         }
 
-        setTimeout(()=> {
+        setTimeout(() => {
             const response = axios.post('http://localhost:3000/orders', data);
             response.then((res) => {
                 console.log(res);
 
-                if(res.status == 200) {
+                if (res.status == 200) {
 
-                    window.location.href = '/';
+                    axios.delete('http://localhost:3000/delete?' + "_id=" + productData[0]._id).then((response) => {
+                        console.log(response);
+                        // Redirect to home page after 3 seconds
+                        window.location.href = '/';
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+
+
                 }
             })
         }, 3000);
@@ -39,17 +48,17 @@ const CartComponent = ({ setShowCart, productData, loggedInUserData, imageData }
 
     const itemPurchased = () => {
         toast("Payment Succeeded✅", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          transition: Bounce,
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
         });
-      }
+    }
 
     return (
         <div id='cart' className='fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50'>

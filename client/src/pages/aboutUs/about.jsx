@@ -2,9 +2,9 @@ import React from 'react';
 import { Users, MessageCircle, UserCheck} from 'lucide-react';
 
 const teamMembers = [
-  { name: "Harshit Shekhar", role: "Project Lead", bio: "Driving the vision and strategy of Project Jugaad." },
-  { name: "Piyush Pratap Singh", role: "Frontend Dev", bio: "Building the core functionality of the platform." },
-  { name: "Harsh Chaudhary", role: "Backend Dev", bio: "Creating the user interface and experience." },
+  { name: "Harshit Shekhar", role: "Project Lead", bio: "Driving the vision and strategy of Project Jugaad.", image: "https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"},
+  { name: "Piyush Pratap Singh", role: "Frontend Dev", bio: "Building the core functionality of the platform.", image: "https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"},
+  { name: "Harsh Chaudhary", role: "Backend Dev", bio: "Creating the user interface and experience.", image: "https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"},
 ];
 
 const features = [
@@ -55,7 +55,7 @@ const About = () => {
               {teamMembers.map((member, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow duration-300">
                   <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-gray-200">
-                    <img src={`https://images.unsplash.com/photo-${1492562080023 + index}-ab3db95bfbde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D`} alt={member.name} className="w-full h-full object-cover" />
+                    <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2 text-gray-900">{member.name}</h3>
                   <p className="text-gray-600 mb-2">{member.role}</p>
